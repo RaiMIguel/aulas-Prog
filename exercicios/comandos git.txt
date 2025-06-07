@@ -1,4 +1,4 @@
 git clone "url do projeto" 
 git add . = adionar tudo
-git commit -m "mensagem do commmit"
+git commit -m "mensagem do commit"
 git push origin main 
