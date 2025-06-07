@@ -18,5 +18,6 @@ public class Ex002 {
         else {
             System.out.println("não tem na lista");
         }
+         scan.close();
     }
 }
