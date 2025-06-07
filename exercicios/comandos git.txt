@@ -1,4 +1,9 @@
 git clone "url do projeto" 
 git add . = adionar tudo
 git commit -m "mensagem do commit"
-git push origin main 
+git push origin main = enviar commit
+git remote -v = conferir repositório
+
+git remote set-url origin https://github.com/seu-usuario/repositorio-certo.git (link repositório)
+== trocar repositorio
+
