@@ -41,6 +41,7 @@ public class SistemaFinanceiro {
                     break;
                 case 4:
                     gastosCategoria(escolha, listaGastos);
+                    break;
                 case 0:
                     System.out.println("Encerrando o sistema...");
                     break;
@@ -113,9 +114,31 @@ public class SistemaFinanceiro {
     }
       public static void gastosCategoria (Scanner escolha, ArrayList<Gasto> lista) { 
         System.out.println("--- VER GASTOS POR CATEGORIA ---");
-        System.out.print("Digite a categoria que deseja filtrar (ex: Alimentação, Transporte): ");
-        String categoriaFiltrar = escolha.nextLine();
+        System.out.println("1 - " + CATEGORIA_ALIMENTACAO);
+        System.out.println("2 - " + CATEGORIA_TRANSPORTE);
+        System.out.println("3 - " + CATEGORIA_MORADIA);
+        System.out.println("4 - " + CATEGORIA_LAZER);
+        System.out.println("5 - " + CATEGORIA_SAUDE);
+        System.out.println("6 - " + CATEGORIA_EDUCACAO);
+        System.out.println("7 - " + CATEGORIA_OUTROS);
+        System.out.print("Digite o número da categoria: ");
 
+        int opcaoCategoria = escolha.nextInt();
+        escolha.nextLine();
+        String categoriaFiltrar;
+
+        switch (opcaoCategoria) { // Usa o switch para transformar o número no nome da categoria
+            case 1: categoriaFiltrar = CATEGORIA_ALIMENTACAO; break;
+            case 2: categoriaFiltrar = CATEGORIA_TRANSPORTE; break;
+            case 3: categoriaFiltrar = CATEGORIA_MORADIA; break;
+            case 4: categoriaFiltrar = CATEGORIA_LAZER; break;
+            case 5: categoriaFiltrar = CATEGORIA_SAUDE; break;
+            case 6: categoriaFiltrar = CATEGORIA_EDUCACAO; break;
+            case 7: categoriaFiltrar = CATEGORIA_OUTROS; break;
+            default:
+                System.out.println(" Categoria inválida. Não foi possível filtrar.");
+                return;
+         }
         boolean GastoNaCategoria = false; 
 
         if (lista.isEmpty()) {
