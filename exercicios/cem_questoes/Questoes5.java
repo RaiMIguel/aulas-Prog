@@ -1,15 +1,36 @@
 public class Questoes5 {
-    public static void main(String[] args){
-        float nota1 = 8.50f;
-        float nota2 = 7.00f;
-        float nota3 = 9.20f;
-        float nota4 = 6.80f;
-        float media = (nota1+nota2+nota3+nota4)/4;
 
-        System.out.println(String.format("%.2f", nota1));
-        System.out.println(String.format("%.2f", nota2));
-        System.out.println(String.format("%.2f", nota3));
-        System.out.println(String.format("%.2f",nota4));
-        System.out.println("a média das notas é: "+ String.format("%.2f", media));
+    /**
+     * @param args
+     * 
+     *             Crie um programa que calcule a média aritmética de 4 notas: 8.5,
+     *             7.0, 9.2, 6.8.
+     *             Objetivos**:
+     *             - Trabalhar com múltiplas variáveis
+     *             - Realizar cálculo de média
+     *             - Usar operações aritméticas
+     * @return "a média das notas é: media"
+     */
+    public static void main(String[] args) {
+        float[] notas = {8.5f,7.0f, 9.2f, 6.8f};
+        calcularMediaEExibirMensagem(notas);
+        
+    }
+
+
+    /** 
+     * @param float[] notas
+     * @return "a média das notas é:  %.2f\n",media
+     */
+    public static void calcularMediaEExibirMensagem(float[] notas) {
+        
+        float media = 0f;
+        for (float nota : notas) {
+            System.out.printf("%.2f\n",nota);
+            media += nota;
+        }
+        media = media / notas.length;
+        System.out.printf("a média das notas é:  %.2f\n",media);
+
     }
 }

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Questoes92 {
 
     // Método principal para validar o cartão de crédito

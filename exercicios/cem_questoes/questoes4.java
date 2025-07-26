@@ -1,20 +1,25 @@
-public class questoes4 {
-    public static void main (String[] args) {
-        int valor1 = 23;
-        int valor2 = 67;
-        int valor3 = 45;
-        int maiorValor;
 
-        if (valor1 > valor2 && valor1 > valor3){
-            maiorValor = valor1;
-        }
-            else if (valor2 > valor1 && valor2 > valor3 ){
-                maiorValor = valor2;
-            }
-            else {
-                maiorValor = valor3;
-            }
+public class Questoes4 {
 
-        System.out.println("O maior número é: "+ maiorValor);
+    /**
+     * @param args
+     *             Escreva um programa que determine qual dos três números é o
+     *             maior. Use os valores: 23, 67, 45.
+     *             Objetivos**:
+     *             - Usar estruturas de decisão (if/else)
+     *             - Comparar múltiplos valores
+     *             - Trabalhar com variáveis
+     * @Return O maior número é: maiorValor
+     */
+    public static void main(String[] args) {
+       int[] valores = {23,67,45};
+
+       int maiorValor = valores[0];
+       for (int i = 1; i < valores.length; i++) {
+            if (maiorValor < valores[i]) {
+                maiorValor = valores[i];
+            }
+       }
+        System.out.println("O maior número é: " + maiorValor);
     }
 }
