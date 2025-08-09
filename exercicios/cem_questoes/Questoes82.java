@@ -1,51 +1,45 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Questoes82 {
+
+    /**
+     * @param args
+     * Enunciado: Conte quantas palavras existem em uma frase,
+     * considerando diferentes separadores.
+     *
+     * Objetivos:
+     * - Identificar separadores de palavras
+     * - Extrair palavras válidas
+     * - Ignorar separadores múltiplos
+     */
     public static void main(String[] args) {
-        String texto = "Olá,mundo!Como;você:está?Bem...Java/Programação";
-
+        String texto = "Olá,mundo!Como;você:está?Bem...";
+        
         System.out.println("Texto: \"" + texto + "\"");
-
-        // Expressão regular para separar por não-letras, incluindo _ para compatibilidade geral
-        // \\P{L} significa "qualquer caractere que não seja uma letra"
-        String[] palavrasArray = texto.split("[^\\p{L}]+"); 
         
-        List<String> palavrasExtraidas = new ArrayList<>();
-        StringBuilder separadoresEncontrados = new StringBuilder();
+        contarPalavras(texto);
+    }
 
-        // Encontrar e listar separadores
-        Pattern p = Pattern.compile("[^\\p{L} ]+"); // Busca por qualquer não-letra (exceto espaço)
-        Matcher m = p.matcher(texto);
-        while (m.find()) {
-            String sep = m.group();
-            for (char c : sep.toCharArray()) {
-                if (separadoresEncontrados.indexOf(String.valueOf(c)) == -1) {
-                    separadoresEncontrados.append(c).append(" ");
-                }
-            }
-        }
-        String sepStr = separadoresEncontrados.toString().trim();
-        if (sepStr.isEmpty()) {
-            System.out.println("\nSeparadores encontrados: Nenhum (apenas espaços se aplicável)");
-        } else {
-            System.out.println("\nSeparadores encontrados: " + sepStr.replace(" ", ", "));
-        }
+    /**
+     * Extrai e conta palavras de uma string, lidando com múltiplos separadores.
+     * @param texto A string a ser analisada.
+     */
+    public static void contarPalavras(String texto) {
+        String separadores = ",!;?:.";
+        
+        System.out.println("\nSeparadores encontrados: " + separadores);
 
-
+        String[] palavras = texto.split("[\\s" + Pattern.quote(separadores) + "]+");
+        
         System.out.println("Palavras extraídas:");
-        int contadorPalavras = 0;
-        for (String pTemp : palavrasArray) {
-            String palavraLimpa = pTemp.trim();
-            if (!palavraLimpa.isEmpty()) {
-                palavrasExtraidas.add(palavraLimpa);
-                contadorPalavras++;
-                System.out.println(contadorPalavras + ". \"" + palavraLimpa + "\"");
+        int contador = 1;
+        for (String palavra : palavras) {
+            if (!palavra.isEmpty()) {
+                System.out.println(contador + ". \"" + palavra + "\"");
+                contador++;
             }
         }
         
-        System.out.println("\nTotal de palavras: " + contadorPalavras);
+        System.out.println("\nTotal de palavras: " + (contador - 1));
     }
 }

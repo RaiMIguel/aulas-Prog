@@ -2,109 +2,95 @@ import java.util.Scanner;
 
 public class Questoes99 {
 
-    private static Scanner scanner = new Scanner(System.in);
-
+    /**
+     * @param args
+     * Enunciado: Crie um sistema de navegação de menus aninhados usando switch case.
+     */
     public static void main(String[] args) {
-        menuPrincipal();
-    }
-
-    private static void menuPrincipal() {
-        int opcaoPrincipal;
+        Scanner scanner = new Scanner(System.in);
+        int opcaoMenuPrincipal = -1;
+        
         do {
             System.out.println("\n=== SISTEMA NINJA - MENU PRINCIPAL ===");
-            System.out.println("1 - Gerenciar Ninjas");
-            System.out.println("2 - Missões");
-            System.out.println("0 - Sair");
+            System.out.println("1 - Gerenciar Ninjas\n2 - Missões\n0 - Sair");
             System.out.print("Opção: ");
-
-            opcaoPrincipal = obterOpcaoValida();
-
-            switch (opcaoPrincipal) {
+            opcaoMenuPrincipal = scanner.nextInt();
+            
+            switch (opcaoMenuPrincipal) {
                 case 1:
-                    menuGerenciarNinjas();
+                    menuGerenciarNinjas(scanner);
                     break;
                 case 2:
-                    menuMissoes();
+                    menuMissoes(scanner);
                     break;
                 case 0:
-                    System.out.println("Saindo do sistema. Adeus!");
+                    System.out.println("\nSaindo do sistema...");
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("\nOpção inválida. Tente novamente.");
             }
-        } while (opcaoPrincipal != 0);
+        } while (opcaoMenuPrincipal != 0);
+        
+        scanner.close();
     }
-
-    private static void menuGerenciarNinjas() {
-        int opcaoNinjas;
+    
+    public static void menuGerenciarNinjas(Scanner scanner) {
+        int opcao;
         do {
             System.out.println("\n=== GERENCIAR NINJAS ===");
-            System.out.println("1 - Cadastrar Ninja");
-            System.out.println("2 - Listar Ninjas");
-            System.out.println("3 - Voltar ao Menu Principal");
+            System.out.println("1 - Cadastrar Ninja\n2 - Listar Ninjas\n3 - Voltar ao Menu Principal");
             System.out.print("Opção: ");
-
-            opcaoNinjas = obterOpcaoValida();
-
-            switch (opcaoNinjas) {
+            opcao = scanner.nextInt();
+            
+            switch (opcao) {
                 case 1:
                     System.out.println("\n=== CADASTRAR NINJA ===");
                     System.out.println("Funcionalidade em desenvolvimento...");
-                    System.out.println("Voltando ao menu anterior...");
                     break;
                 case 2:
                     System.out.println("\n=== LISTAR NINJAS ===");
                     System.out.println("Funcionalidade em desenvolvimento...");
-                    System.out.println("Voltando ao menu anterior...");
                     break;
                 case 3:
-                    System.out.println("Voltando ao Menu Principal...");
+                    System.out.println("\nVoltando ao menu anterior...");
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("\nOpção inválida. Tente novamente.");
             }
-        } while (opcaoNinjas != 3);
+            if (opcao != 3) {
+                System.out.println("Pressione Enter para continuar...");
+                scanner.nextLine();
+            }
+        } while (opcao != 3);
     }
-
-    private static void menuMissoes() {
-        int opcaoMissoes;
+    
+    public static void menuMissoes(Scanner scanner) {
+        int opcao;
         do {
             System.out.println("\n=== MISSÕES ===");
-            System.out.println("1 - Nova Missão");
-            System.out.println("2 - Listar Missões");
-            System.out.println("3 - Voltar ao Menu Principal");
+            System.out.println("1 - Nova Missão\n2 - Listar Missões\n3 - Voltar ao Menu Principal");
             System.out.print("Opção: ");
-
-            opcaoMissoes = obterOpcaoValida();
-
-            switch (opcaoMissoes) {
+            opcao = scanner.nextInt();
+            
+            switch (opcao) {
                 case 1:
                     System.out.println("\n=== NOVA MISSÃO ===");
                     System.out.println("Funcionalidade em desenvolvimento...");
-                    System.out.println("Voltando ao menu anterior...");
                     break;
                 case 2:
                     System.out.println("\n=== LISTAR MISSÕES ===");
                     System.out.println("Funcionalidade em desenvolvimento...");
-                    System.out.println("Voltando ao menu anterior...");
                     break;
                 case 3:
-                    System.out.println("Voltando ao Menu Principal...");
+                    System.out.println("\nVoltando ao menu anterior...");
                     break;
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("\nOpção inválida. Tente novamente.");
             }
-        } while (opcaoMissoes != 3);
-    }
-
-    private static int obterOpcaoValida() {
-        while (!scanner.hasNextInt()) {
-            System.out.println("Entrada inválida. Por favor, digite um número.");
-            System.out.print("Opção: ");
-            scanner.next();
-        }
-        int opcao = scanner.nextInt();
-        scanner.nextLine(); // Consumir a nova linha
-        return opcao;
+            if (opcao != 3) {
+                System.out.println("Pressione Enter para continuar...");
+                scanner.nextLine();
+            }
+        } while (opcao != 3);
     }
 }

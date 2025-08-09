@@ -1,29 +1,45 @@
+import java.text.Normalizer;
+
 public class Questoes80 {
+
+    /**
+     * @param args
+     * Enunciado: Verifique se uma string é um palíndromo.
+     *
+     * Objetivos:
+     * - Implementar verificação de palíndromo
+     * - Ignorar espaços, acentos e case
+     * - Testar múltiplos casos
+     */
     public static void main(String[] args) {
-        String[] testes = {"arara", "A base do teto desaba", "Naruto", "Ovo"};
-
+        String[] testes = {"arara", "A base do teto desaba", "Naruto"};
+        
         for (int i = 0; i < testes.length; i++) {
-            String textoOriginal = testes[i];
-            System.out.println("\nTeste " + (i + 1) + ": \"" + textoOriginal + "\"");
+            System.out.println("Teste " + (i + 1) + ": \"" + testes[i] + "\"");
+            verificarPalindromo(testes[i]);
+            System.out.println();
+        }
+    }
 
-            // 1. Limpar a string: remover espaços, pontuação, acentos e converter para minúsculas
-            String textoLimpo = textoOriginal.toLowerCase()
-                                             .replaceAll("[^a-z]", ""); // Remove tudo que não for letra de 'a' a 'z'
-
-            // 2. Inverter a string limpa
-            StringBuilder invertidoBuilder = new StringBuilder(textoLimpo);
-            invertidoBuilder.reverse();
-            String textoInvertido = invertidoBuilder.toString();
-
-            System.out.println("Limpo: \"" + textoLimpo + "\"");
-            System.out.println("Invertido: \"" + textoInvertido + "\"");
-
-            // 3. Comparar
-            if (textoLimpo.equals(textoInvertido)) {
-                System.out.println("Resultado: É palíndromo ✓");
-            } else {
-                System.out.println("Resultado: NÃO é palíndromo ✗");
-            }
+    /**
+     * Verifica e exibe o resultado de uma verificação de palíndromo.
+     * @param texto O texto a ser testado.
+     */
+    public static void verificarPalindromo(String texto) {
+        String textoLimpo = Normalizer.normalize(texto, Normalizer.Form.NFD)
+                                     .replaceAll("[^\\p{ASCII}]", "")
+                                     .replaceAll("[^a-zA-Z]", "")
+                                     .toLowerCase();
+        
+        String textoInvertido = new StringBuilder(textoLimpo).reverse().toString();
+        
+        System.out.println("Limpo: \"" + textoLimpo + "\"");
+        System.out.println("Invertido: \"" + textoInvertido + "\"");
+        
+        if (textoLimpo.equals(textoInvertido)) {
+            System.out.println("Resultado: É palíndromo ✓");
+        } else {
+            System.out.println("Resultado: NÃO é palíndromo ✗");
         }
     }
 }

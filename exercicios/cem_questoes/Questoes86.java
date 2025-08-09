@@ -1,15 +1,29 @@
 public class Questoes86 {
 
-    public static boolean ehPar(int numero) {
-        return numero % 2 == 0;
+    /**
+     * @param args
+     * Enunciado: Implemente um método que verifique se um número é par.
+     *
+     * Objetivos:
+     * - Criar método boolean
+     * - Implementar lógica de verificação
+     * - Testar com múltiplos valores
+     */
+    public static void main(String[] args) {
+        int[] numeros = {4, 7, 0, -6};
+        
+        System.out.println("Testando método ehPar():");
+        for (int numero : numeros) {
+            System.out.println(numero + " é par? " + ehPar(numero));
+        }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Testando método éPar():");
-        System.out.println("4 é par? " + ehPar(4));
-        System.out.println("7 é par? " + ehPar(7));
-        System.out.println("0 é par? " + ehPar(0));
-        System.out.println("-6 é par? " + ehPar(-6));
-        System.out.println("-5 é par? " + ehPar(-5));
+    /**
+     * Verifica se um número inteiro é par.
+     * @param numero O número a ser verificado.
+     * @return true se o número for par, false caso contrário.
+     */
+    public static boolean ehPar(int numero) {
+        return numero % 2 == 0;
     }
 }

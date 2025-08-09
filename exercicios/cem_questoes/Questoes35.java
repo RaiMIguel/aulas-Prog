@@ -1,21 +1,32 @@
 public class Questoes35 {
+
+    /**
+     * @param args
+     * Enunciado: Encontre e exiba todos os números pares entre 1 e 100.
+     *
+     * Objetivos:
+     * - Usar condições dentro de laços
+     * - Filtrar valores
+     * - Contar elementos
+     */
     public static void main(String[] args) {
+        encontrarEPares();
+    }
+
+    /**
+     * Encontra e exibe os números pares de 1 a 100, formatando a saída
+     * para 10 números por linha.
+     */
+    public static void encontrarEPares() {
         System.out.println("Números pares de 1 a 100:");
-        int contadorPares = 0;
-        for (int i = 1; i <= 100; i++) {
-            if (i % 2 == 0) {
-                System.out.print(i);
-                contadorPares++;
-                if (contadorPares % 10 == 0) {
-                    System.out.println();
-                } else {
-                    System.out.print(" ");
-                }
+        int contador = 0;
+        for (int i = 2; i <= 100; i += 2) {
+            System.out.print(i + " ");
+            contador++;
+            if (contador % 10 == 0) {
+                System.out.println();
             }
         }
-        if (contadorPares % 10 != 0) { // Garante nova linha se a última linha não tiver 10 números
-            System.out.println();
-        }
-        System.out.println("\nTotal de números pares: " + contadorPares);
+        System.out.println("\nTotal de números pares: " + contador);
     }
 }

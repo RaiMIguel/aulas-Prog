@@ -3,34 +3,51 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Questoes58 {
+
+    /**
+     * @param args
+     * Enunciado: Implemente busca por elemento em ArrayList. Retorne todas as posições
+     * onde o elemento aparece.
+     *
+     * Objetivos:
+     * - Buscar elemento específico
+     * - Retornar múltiplas posições
+     * - Lidar com caso não encontrado
+     */
     public static void main(String[] args) {
-        ArrayList<String> lista = new ArrayList<>(Arrays.asList("Java", "Python", "Java", "C++", "Java"));
         Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Lista: " + lista.toString());
+        ArrayList<String> lista = new ArrayList<>(Arrays.asList("Java", "Python", "Java", "C++", "Java"));
+        
+        System.out.println("Lista: " + lista);
         System.out.print("Digite o elemento a buscar: ");
-        String elementoBuscar = scanner.nextLine();
-
-        System.out.println("Buscando \"" + elementoBuscar + "\" na lista...");
-
-        ArrayList<Integer> posicoesEncontradas = new ArrayList<>();
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).equals(elementoBuscar)) {
-                posicoesEncontradas.add(i);
-            }
-        }
-
-        if (posicoesEncontradas.isEmpty()) {
+        String elemento = scanner.nextLine();
+        
+        System.out.println("\nBuscando \"" + elemento + "\" na lista...");
+        ArrayList<Integer> posicoes = buscarOcorrencias(lista, elemento);
+        
+        if (posicoes.isEmpty()) {
             System.out.println("Elemento não encontrado.");
         } else {
-            System.out.print("Elemento encontrado nas posições: ");
-            for (int i = 0; i < posicoesEncontradas.size(); i++) {
-                System.out.print(posicoesEncontradas.get(i) + (i == posicoesEncontradas.size() - 1 ? "" : ", "));
-            }
-            System.out.println();
-            System.out.println("Total de ocorrências: " + posicoesEncontradas.size());
+            System.out.println("Elemento encontrado nas posições: " + posicoes);
+            System.out.println("Total de ocorrências: " + posicoes.size());
         }
-
+        
         scanner.close();
+    }
+
+    /**
+     * Busca por todas as ocorrências de um elemento em um ArrayList de strings.
+     * @param lista A lista a ser pesquisada.
+     * @param elemento O elemento a ser buscado.
+     * @return Um ArrayList de inteiros contendo os índices onde o elemento foi encontrado.
+     */
+    public static ArrayList<Integer> buscarOcorrencias(ArrayList<String> lista, String elemento) {
+        ArrayList<Integer> posicoes = new ArrayList<>();
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).equals(elemento)) {
+                posicoes.add(i);
+            }
+        }
+        return posicoes;
     }
 }

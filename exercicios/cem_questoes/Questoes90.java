@@ -1,27 +1,101 @@
 public class Questoes90 {
 
-    // --- Fatorial Recursivo ---
-    public static long fatorialRecursivo(int n) {
-        System.out.print("fatorialRecursivo(" + n + ")");
-        if (n <= 1) {
-            System.out.println("\n= 1");
-            return 1;
-        } else {
-            System.out.print("\n= " + n + " × ");
-            return n * fatorialRecursivo(n - 1);
-        }
+    /**
+     * @param args
+     * Enunciado: Implemente métodos recursivos para cálculo de fatorial e Fibonacci.
+     *
+     * Objetivos:
+     * - Entender recursão
+     * - Implementar casos base
+     * - Comparar com versões iterativas
+     */
+    public static void main(String[] args) {
+        int numFatorial = 5;
+        int numFibonacci = 8;
+        
+        System.out.println("=== MÉTODOS RECURSIVOS ===");
+        
+        System.out.println("\nFatorial recursivo de " + numFatorial + ":");
+        fatorialRecursivoComProcesso(numFatorial);
+        
+        System.out.println("\nFibonacci recursivo (" + numFibonacci + "º termo):");
+        System.out.println("fibonacciRecursivo(" + numFibonacci + ") = " + fibonacciRecursivo(numFibonacci));
+        
+        System.out.println("\nComparação de performance:");
+        long startTime, endTime;
+        
+        startTime = System.nanoTime();
+        fatorialIterativo(numFatorial);
+        endTime = System.nanoTime();
+        System.out.printf("Fatorial iterativo(%d): %d (%d ns)%n", numFatorial, fatorialIterativo(numFatorial), endTime - startTime);
+        
+        startTime = System.nanoTime();
+        fatorialRecursivo(numFatorial);
+        endTime = System.nanoTime();
+        System.out.printf("Fatorial recursivo(%d): %d (%d ns)%n", numFatorial, fatorialRecursivo(numFatorial), endTime - startTime);
+        
+        startTime = System.nanoTime();
+        fibonacciIterativo(numFibonacci);
+        endTime = System.nanoTime();
+        System.out.printf("Fibonacci iterativo(%d): %d (%d ns)%n", numFibonacci, fibonacciIterativo(numFibonacci), endTime - startTime);
+        
+        startTime = System.nanoTime();
+        fibonacciRecursivo(numFibonacci);
+        endTime = System.nanoTime();
+        System.out.printf("Fibonacci recursivo(%d): %d (%d ns)%n", numFibonacci, fibonacciRecursivo(numFibonacci), endTime - startTime);
     }
 
-    // --- Fatorial Iterativo (para comparação) ---
+    // --- Fatorial ---
+    /**
+     * Calcula o fatorial de um número de forma recursiva.
+     * @param n O número a ser calculado.
+     * @return O fatorial de n.
+     */
+    public static long fatorialRecursivo(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        return n * fatorialRecursivo(n - 1);
+    }
+
+    /**
+     * Exibe o processo de cálculo recursivo do fatorial.
+     * @param n O número a ser calculado.
+     */
+    public static void fatorialRecursivoComProcesso(int n) {
+        System.out.println("fatorialRecursivo(" + n + ")");
+        StringBuilder processo = new StringBuilder();
+        long resultado = 1;
+        for (int i = n; i >= 1; i--) {
+            processo.append(i);
+            if (i > 1) {
+                processo.append(" × ");
+            }
+            resultado *= i;
+        }
+        System.out.println("= " + processo.toString());
+        System.out.println("= " + resultado);
+    }
+
+    /**
+     * Calcula o fatorial de um número de forma iterativa.
+     * @param n O número a ser calculado.
+     * @return O fatorial de n.
+     */
     public static long fatorialIterativo(int n) {
         long resultado = 1;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 2; i <= n; i++) {
             resultado *= i;
         }
         return resultado;
     }
 
-    // --- Fibonacci Recursivo ---
+    // --- Fibonacci ---
+    /**
+     * Calcula o n-ésimo termo da sequência de Fibonacci de forma recursiva.
+     * @param n O termo a ser calculado.
+     * @return O valor do n-ésimo termo.
+     */
     public static long fibonacciRecursivo(int n) {
         if (n <= 1) {
             return n;
@@ -29,61 +103,21 @@ public class Questoes90 {
         return fibonacciRecursivo(n - 1) + fibonacciRecursivo(n - 2);
     }
 
-    // --- Fibonacci Iterativo (para comparação) ---
+    /**
+     * Calcula o n-ésimo termo da sequência de Fibonacci de forma iterativa.
+     * @param n O termo a ser calculado.
+     * @return O valor do n-ésimo termo.
+     */
     public static long fibonacciIterativo(int n) {
         if (n <= 1) {
             return n;
         }
-        long a = 0;
-        long b = 1;
+        long a = 0, b = 1;
         for (int i = 2; i <= n; i++) {
             long temp = a + b;
             a = b;
             b = temp;
         }
         return b;
-    }
-
-
-    public static void main(String[] args) {
-        System.out.println("=== MÉTODOS RECURSIVOS ===");
-
-        int numFatorial = 5;
-        System.out.println("\nFatorial recursivo de " + numFatorial + ":");
-        long resultadoFatorial = fatorialRecursivo(numFatorial);
-        System.out.println("= " + resultadoFatorial);
-
-
-        int numFibonacci = 8;
-        System.out.println("\nFibonacci recursivo (" + numFibonacci + "º termo):");
-        long resultadoFibonacci = fibonacciRecursivo(numFibonacci);
-        System.out.println("fibonacciRecursivo(" + numFibonacci + ") = " + resultadoFibonacci);
-
-
-        System.out.println("\nComparação de performance:");
-
-        // Teste Fatorial Iterativo
-        long startTime = System.nanoTime();
-        long fatIter = fatorialIterativo(numFatorial);
-        long endTime = System.nanoTime();
-        System.out.println("Fatorial iterativo(" + numFatorial + "): " + fatIter + " (" + (endTime - startTime) / 1_000_000 + " ms)");
-
-        // Teste Fatorial Recursivo
-        startTime = System.nanoTime();
-        long fatRec = fatorialRecursivo(numFatorial); // Chamar novamente para pegar o tempo limpo
-        endTime = System.nanoTime();
-        System.out.println("Fatorial recursivo(" + numFatorial + "): " + fatRec + " (" + (endTime - startTime) / 1_000_000 + " ms)");
-
-        // Teste Fibonacci Iterativo
-        startTime = System.nanoTime();
-        long fibIter = fibonacciIterativo(numFibonacci);
-        endTime = System.nanoTime();
-        System.out.println("Fibonacci iterativo(" + numFibonacci + "): " + fibIter + " (" + (endTime - startTime) / 1_000_000 + " ms)");
-
-        // Teste Fibonacci Recursivo
-        startTime = System.nanoTime();
-        long fibRec = fibonacciRecursivo(numFibonacci);
-        endTime = System.nanoTime();
-        System.out.println("Fibonacci recursivo(" + numFibonacci + "): " + fibRec + " (" + (endTime - startTime) / 1_000_000 + " ms)");
     }
 }

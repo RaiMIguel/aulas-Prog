@@ -1,26 +1,53 @@
 public class Questoes64 {
+
+    /**
+     * @param args
+     * Enunciado: Calcule a soma de todos os elementos de uma matriz.
+     *
+     * Objetivos:
+     * - Percorrer matriz completa
+     * - Acumular valores
+     * - Usar laços aninhados
+     */
     public static void main(String[] args) {
         int[][] matriz = {
             {5, 8, 12},
             {15, 3, 7},
             {9, 11, 6}
         };
-
+        
         System.out.println("Matriz:");
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.printf("%3d", matriz[i][j]);
+        exibirMatriz(matriz);
+        
+        int soma = somarMatriz(matriz);
+        System.out.println("\nSoma de todos os elementos: " + soma);
+    }
+
+    /**
+     * Exibe uma matriz de inteiros, formatada.
+     * @param matriz A matriz a ser exibida.
+     */
+    public static void exibirMatriz(int[][] matriz) {
+        for (int[] linha : matriz) {
+            for (int elemento : linha) {
+                System.out.printf("%3d", elemento);
             }
             System.out.println();
         }
+    }
 
-        int somaTotal = 0;
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                somaTotal += matriz[i][j];
+    /**
+     * Soma todos os elementos de uma matriz.
+     * @param matriz A matriz de inteiros.
+     * @return A soma total de todos os elementos.
+     */
+    public static int somarMatriz(int[][] matriz) {
+        int soma = 0;
+        for (int[] linha : matriz) {
+            for (int elemento : linha) {
+                soma += elemento;
             }
         }
-
-        System.out.println("\nSoma de todos os elementos: " + somaTotal);
+        return soma;
     }
 }

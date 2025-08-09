@@ -1,27 +1,45 @@
 import java.util.Map;
-import java.util.TreeMap; // TreeMap mantém as chaves ordenadas
+import java.util.TreeMap;
 
 public class Questoes78 {
+
+    /**
+     * @param args
+     * Enunciado: Conte quantas vezes cada letra aparece em uma string.
+     *
+     * Objetivos:
+     * - Contar frequência de caracteres
+     * - Ignorar não-letras
+     * - Organizar resultado
+     */
     public static void main(String[] args) {
         String texto = "Naruto Uzumaki";
-        Map<Character, Integer> contagemLetras = new TreeMap<>();
-        int totalLetras = 0;
-
+        
         System.out.println("Texto: \"" + texto + "\"");
+        
+        contarLetras(texto);
+    }
+
+    /**
+     * Conta a frequência de cada letra em uma string e exibe o resultado ordenado.
+     * @param texto A string a ser analisada.
+     */
+    public static void contarLetras(String texto) {
+        TreeMap<Character, Integer> frequencias = new TreeMap<>();
+        int totalLetras = 0;
+        
+        String textoLimpo = texto.replaceAll("[^a-zA-Z]", "").toLowerCase();
+        
+        for (char letra : textoLimpo.toCharArray()) {
+            frequencias.put(letra, frequencias.getOrDefault(letra, 0) + 1);
+            totalLetras++;
+        }
+
         System.out.println("\nContagem de letras (case-insensitive):");
-
-        for (char caractere : texto.toCharArray()) {
-            if (Character.isLetter(caractere)) {
-                char letra = Character.toUpperCase(caractere);
-                contagemLetras.put(letra, contagemLetras.getOrDefault(letra, 0) + 1);
-                totalLetras++;
-            }
+        for (Map.Entry<Character, Integer> entry : frequencias.entrySet()) {
+            System.out.println(Character.toUpperCase(entry.getKey()) + ": " + entry.getValue() + " vez" + (entry.getValue() > 1 ? "es" : ""));
         }
-
-        for (Map.Entry<Character, Integer> entry : contagemLetras.entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue() + " vez" + (entry.getValue() > 1 ? "es" : ""));
-        }
-
+        
         System.out.println("\nTotal de letras: " + totalLetras);
     }
 }

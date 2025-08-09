@@ -1,65 +1,64 @@
-import java.util.Scanner;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Questoes42 {
+
+    /**
+     * @param args
+     * Enunciado: Implemente o jogo da forca com uma palavra predefinida.
+     * O jogador tem 6 tentativas erradas. Palavra: “JAVA”.
+     *
+     * Objetivos:
+     * - Manipular strings
+     * - Controlar estado do jogo
+     * - Interface de usuário
+     */
     public static void main(String[] args) {
+        jogarForca();
+    }
+
+    /**
+     * Implementa a lógica do jogo da forca.
+     */
+    public static void jogarForca() {
         Scanner scanner = new Scanner(System.in);
-        String palavraSecreta = "JAVA".toUpperCase();
-        char[] letrasDescobertas = new char[palavraSecreta.length()];
-        Arrays.fill(letrasDescobertas, '_');
+        String palavraSecreta = "JAVA";
+        char[] palavraAdivinhada = new char[palavraSecreta.length()];
+        Arrays.fill(palavraAdivinhada, '_');
 
         int tentativasRestantes = 6;
-        String letrasTentadas = "";
-        boolean jogoGanho = false;
+        boolean venceu = false;
 
-        System.out.println("Bem-vindo ao Jogo da Forca!");
-
-        while (tentativasRestantes > 0 && !jogoGanho) {
-            System.out.println("\nPalavra: " + String.valueOf(letrasDescobertas));
+        while (tentativasRestantes > 0 && !venceu) {
+            System.out.println("\nPalavra: " + String.valueOf(palavraAdivinhada));
             System.out.println("Tentativas restantes: " + tentativasRestantes);
-            System.out.println("Letras tentadas: " + letrasTentadas);
-
-            System.out.print("Letra: ");
-            String entrada = scanner.next().toUpperCase();
-
-            if (entrada.length() != 1 || !Character.isLetter(entrada.charAt(0))) {
-                System.out.println("Por favor, digite apenas uma letra.");
-                continue;
-            }
-
-            char letra = entrada.charAt(0);
-
-            if (letrasTentadas.indexOf(letra) != -1) {
-                System.out.println("Você já tentou esta letra. Tente outra.");
-                continue;
-            }
-
-            letrasTentadas += letra;
+            
+            System.out.print("\nLetra: ");
+            char palpite = scanner.nextLine().toUpperCase().charAt(0);
+            
             boolean letraEncontrada = false;
-
             for (int i = 0; i < palavraSecreta.length(); i++) {
-                if (palavraSecreta.charAt(i) == letra) {
-                    letrasDescobertas[i] = letra;
+                if (palavraSecreta.charAt(i) == palpite) {
+                    palavraAdivinhada[i] = palpite;
                     letraEncontrada = true;
                 }
             }
 
             if (!letraEncontrada) {
-                System.out.println("Letra não encontrada!");
                 tentativasRestantes--;
+                System.out.println("Letra não encontrada!");
             }
-
-            if (String.valueOf(letrasDescobertas).equals(palavraSecreta)) {
-                jogoGanho = true;
+            
+            if (String.valueOf(palavraAdivinhada).equals(palavraSecreta)) {
+                venceu = true;
             }
         }
 
-        System.out.println("\nPalavra: " + String.valueOf(letrasDescobertas));
-        if (jogoGanho) {
+        System.out.println("\nPalavra: " + String.valueOf(palavraAdivinhada));
+        if (venceu) {
             System.out.println("Parabéns! Você venceu!");
         } else {
-            System.out.println("Suas tentativas acabaram! A palavra era: " + palavraSecreta);
-            System.out.println("Game Over!");
+            System.out.println("Você perdeu! A palavra era: " + palavraSecreta);
         }
 
         scanner.close();

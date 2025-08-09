@@ -1,27 +1,32 @@
 import java.util.Scanner;
 
 public class Questoes15 {
-        public static void main(String[] args) {
+
+    /**
+     * @param args
+     * Enunciado: Crie um programa que leia a idade do usuário e informe
+     * há quantos anos ele nasceu.
+     *
+     * Objetivos:
+     * - Ler entrada numérica
+     * - Realizar cálculo simples
+     * - Trabalhar com ano atual
+     */
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        int anoAtual = 2024;
-        int idade;
+        final int ANO_ATUAL = 2024;
+        
+        System.out.print("Digite sua idade: ");
+        int idade = scanner.nextInt();
 
-        while (true) {
-            System.out.print("Digite sua idade: ");
-            idade = scanner.nextInt();
-
-            if (idade >= 0) {
-                break;
-            } else {
-                System.out.println("Idade inválida. Por favor, digite um número positivo.");
-            }
+        if (idade > 0) {
+            int anoNascimento = ANO_ATUAL - idade;
+            System.out.println("Você tem " + idade + " anos.");
+            System.out.println("Você nasceu em: " + anoNascimento);
+        } else {
+            System.out.println("Idade inválida. A idade deve ser um número positivo.");
         }
-
-        int anoNascimento = anoAtual - idade;
-
-        System.out.println("Você tem " + idade + " anos.");
-        System.out.println("Você nasceu em: " + anoNascimento);
-
+        
         scanner.close();
     }
 }

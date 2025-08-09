@@ -1,83 +1,91 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Questoes62 {
+
+    /**
+     * @param args
+     * Enunciado: Crie um sistema de votação usando ArrayList.
+     * Permita votar em candidatos e exiba resultados.
+     *
+     * Objetivos:
+     * - Contar votos por candidato
+     * - Calcular percentuais
+     * - Determinar vencedor
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<String> candidatos = new ArrayList<>(Arrays.asList("João", "Maria", "Pedro"));
-        Map<String, Integer> votos = new HashMap<>(); 
-        for (String candidato : candidatos) {
-            votos.put(candidato, 0);
-        }
-
+        int[] votos = new int[candidatos.size()];
         int totalVotos = 0;
-        int votoEntrada;
+        int voto;
 
         System.out.println("=== SISTEMA DE VOTAÇÃO ===");
         do {
-            System.out.println("\nCandidatos:");
-            for (int i = 0; i < candidatos.size(); i++) {
-                System.out.println((i + 1) + " - " + candidatos.get(i));
-            }
-            System.out.println("0 - Encerrar votação");
+            exibirMenuVotacao(candidatos);
             System.out.print("Voto: ");
+            voto = scanner.nextInt();
 
-            while (!scanner.hasNextInt()) {
-                System.out.println("Entrada inválida. Por favor, digite um número.");
-                System.out.print("Voto: ");
-                scanner.next();
-            }
-            votoEntrada = scanner.nextInt();
-
-            if (votoEntrada >= 1 && votoEntrada <= candidatos.size()) {
-                String candidatoVotado = candidatos.get(votoEntrada - 1);
-                votos.put(candidatoVotado, votos.get(candidatoVotado) + 1); 
+            if (voto > 0 && voto <= candidatos.size()) {
+                votos[voto - 1]++;
                 totalVotos++;
-            } else if (votoEntrada != 0) {
-                System.out.println("Opção inválida. Digite um número de candidato ou 0 para sair.");
+            } else if (voto != 0) {
+                System.out.println("Voto inválido!");
             }
+        } while (voto != 0);
 
-        } while (votoEntrada != 0);
+        exibirResultados(candidatos, votos, totalVotos);
+        
+        scanner.close();
+    }
 
+    /**
+     * Exibe o menu de votação com a lista de candidatos.
+     * @param candidatos A lista de candidatos.
+     */
+    public static void exibirMenuVotacao(ArrayList<String> candidatos) {
+        System.out.println("Candidatos:");
+        for (int i = 0; i < candidatos.size(); i++) {
+            System.out.println((i + 1) + " - " + candidatos.get(i));
+        }
+        System.out.println("0 - Encerrar votação");
+        System.out.println();
+    }
+
+    /**
+     * Exibe os resultados finais da votação.
+     * @param candidatos A lista de candidatos.
+     * @param votos O array de contagem de votos.
+     * @param totalVotos O número total de votos.
+     */
+    public static void exibirResultados(ArrayList<String> candidatos, int[] votos, int totalVotos) {
         System.out.println("\n=== RESULTADO DA VOTAÇÃO ===");
+        
+        double maiorPercentual = -1;
+        String vencedor = "";
+        boolean empate = false;
 
-        int maiorNumeroDeVotos = -1; 
-        ArrayList<String> vencedores = new ArrayList<>();
-        for (String candidato : candidatos) {
-            int votosDoCandidato = votos.get(candidato);
-            double percentual = (totalVotos > 0) ? ((double) votosDoCandidato / totalVotos) * 100 : 0.0;
-            System.out.printf("%s: %d votos (%.2f%%)%n", candidato, votosDoCandidato, percentual);
-
-           
-            if (votosDoCandidato > maiorNumeroDeVotos) {
-                maiorNumeroDeVotos = votosDoCandidato;
-                vencedores.clear(); 
-                vencedores.add(candidato);
-            } else if (votosDoCandidato == maiorNumeroDeVotos && votosDoCandidato > 0) {
-                vencedores.add(candidato);
+        for (int i = 0; i < candidatos.size(); i++) {
+            double percentual = totalVotos > 0 ? (double) votos[i] / totalVotos * 100 : 0.0;
+            System.out.printf("%s: %d voto(s) (%.2f%%)%n", candidatos.get(i), votos[i], percentual);
+            
+            if (percentual > maiorPercentual) {
+                maiorPercentual = percentual;
+                vencedor = candidatos.get(i);
+                empate = false;
+            } else if (percentual == maiorPercentual) {
+                empate = true;
             }
         }
 
         System.out.println("\nTotal de votos: " + totalVotos);
-
         if (totalVotos == 0) {
-             System.out.println("Nenhum voto registrado.");
-        } else if (vencedores.size() > 1) {
-            System.out.print("Vencedor: Empate entre ");
-            for (int i = 0; i < vencedores.size(); i++) {
-                System.out.print(vencedores.get(i) + (i == vencedores.size() - 1 ? "" : " e "));
-            }
-            System.out.println();
-        } else if (!vencedores.isEmpty()) {
-            System.out.println("Vencedor: " + vencedores.get(0));
+            System.out.println("Vencedor: Não houve votos.");
+        } else if (empate) {
+            System.out.println("Vencedor: Empate!");
         } else {
-      
-             System.out.println("Nenhum vencedor determinado (possível erro lógico ou todos com 0 votos e não houve condição de empate > 0).");
+            System.out.println("Vencedor: " + vencedor);
         }
-
-        scanner.close();
     }
 }

@@ -1,192 +1,140 @@
 import java.util.Scanner;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class Questoes100 {
 
-    // Enum para os estados do semáforo
-    enum EstadoSemaforo {
-        VERDE,
-        AMARELO,
-        VERMELHO,
-        PISCA_AMARELO // Modo de manutenção
-    }
+    // Constantes para os estados
+    public static final String VERDE = "VERDE";
+    public static final String AMARELO = "AMARELO";
+    public static final String VERMELHO = "VERMELHO";
+    public static final String PISCA_AMARELO = "PISCA_AMARELO";
+    
+    // Constantes para os comandos
+    public static final String PROXIMO = "PROXIMO";
+    public static final String MANUTENCAO = "MANUTENCAO";
+    public static final String NORMAL = "NORMAL";
+    public static final String STATUS = "STATUS";
+    public static final String SAIR = "SAIR";
+    
+    public static String estadoAtual = VERDE;
+    public static int tempoRestante = 30; // Exemplo inicial
+    public static int ciclo = 1;
+    public static String modo = "NORMAL";
 
-    private static EstadoSemaforo estadoAtual = EstadoSemaforo.VERDE;
-    private static long tempoInicialEstado;
-    private static int cicloAtual = 1;
-    private static ScheduledExecutorService scheduler;
-    private static boolean emManutencao = false;
-
-    // Tempos de duração para cada estado (em segundos)
-    private static final int TEMPO_VERDE = 30;
-    private static final int TEMPO_AMARELO = 5;
-    private static final int TEMPO_VERMELHO = 25;
-
+    /**
+     * @param args
+     * Enunciado: Implemente uma máquina de estados finitos usando switch case para simular um semáforo inteligente.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("=== SEMÁFORO INTELIGENTE ===");
-
-        iniciarSimulacao();
-
-        System.out.println("Comandos: PROXIMO, MANUTENCAO, NORMAL, STATUS, SAIR");
-
         String comando;
+        
+        System.out.println("=== SEMÁFORO INTELIGENTE ===");
+        System.out.println("Estado inicial: " + estadoAtual);
+        System.out.println("Tempo restante: " + tempoRestante + " segundos");
+        System.out.println("\nComandos: PROXIMO, MANUTENCAO, NORMAL, STATUS, SAIR");
+        
         do {
             System.out.print("\n> ");
-            comando = scanner.nextLine().trim().toUpperCase();
-
+            comando = scanner.nextLine().toUpperCase();
+            
             switch (comando) {
-                case "PROXIMO":
-                    transitarProximoEstado();
+                case PROXIMO:
+                    transicaoProximoEstado();
                     break;
-                case "MANUTENCAO":
-                    entrarModoManutencao();
+                case MANUTENCAO:
+                    transicaoModoManutencao();
                     break;
-                case "NORMAL":
-                    sairModoManutencao();
+                case NORMAL:
+                    transicaoModoNormal();
                     break;
-                case "STATUS":
+                case STATUS:
                     exibirStatus();
                     break;
-                case "SAIR":
-                    System.out.println("Encerrando semáforo inteligente.");
+                case SAIR:
+                    System.out.println("Simulação encerrada.");
                     break;
                 default:
                     System.out.println("Comando inválido. Tente novamente.");
             }
-        } while (!comando.equals("SAIR"));
-
-        pararSimulacao();
+        } while (!comando.equals(SAIR));
+        
         scanner.close();
     }
-
-    private static void iniciarSimulacao() {
-        tempoInicialEstado = System.currentTimeMillis();
-        System.out.println("Estado inicial: " + estadoAtual);
-        System.out.println("Tempo restante: " + getTempoRestante(estadoAtual, tempoInicialEstado) + " segundos");
-
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        // A cada segundo, atualiza o tempo restante para o estado atual (se não estiver em manutenção)
-        scheduler.scheduleAtFixedRate(() -> {
-            if (!emManutencao) {
-                // Aqui você pode adicionar lógica para transição automática se desejar
-                // Por exemplo, if (getTempoRestante(estadoAtual, tempoInicialEstado) <= 0) transitarProximoEstado();
-            }
-        }, 1, 1, TimeUnit.SECONDS);
-    }
-
-    private static void pararSimulacao() {
-        if (scheduler != null && !scheduler.isShutdown()) {
-            scheduler.shutdownNow();
-        }
-    }
-
-    private static void transitarProximoEstado() {
-        if (emManutencao) {
-            System.out.println("Não é possível transitar de estado em modo de manutenção.");
-            return;
-        }
-
-        EstadoSemaforo proximoEstado;
+    
+    /**
+     * Muda o estado do semáforo para o próximo do ciclo normal.
+     */
+    public static void transicaoProximoEstado() {
+        System.out.print(estadoAtual + " → ");
         switch (estadoAtual) {
             case VERDE:
-                proximoEstado = EstadoSemaforo.AMARELO;
+                estadoAtual = AMARELO;
+                tempoRestante = 5;
                 break;
             case AMARELO:
-                proximoEstado = EstadoSemaforo.VERMELHO;
+                estadoAtual = VERMELHO;
+                tempoRestante = 25;
+                ciclo++;
                 break;
             case VERMELHO:
-                proximoEstado = EstadoSemaforo.VERDE;
-                cicloAtual++;
+                estadoAtual = VERDE;
+                tempoRestante = 30;
                 break;
-            default: // Não deveria acontecer, mas para segurança
-                proximoEstado = EstadoSemaforo.VERDE;
-                break;
+            case PISCA_AMARELO:
+                System.out.println("Transição inválida. Semáforo em modo de manutenção.");
+                return;
         }
-        System.out.println(estadoAtual + " → " + proximoEstado);
-        estadoAtual = proximoEstado;
-        tempoInicialEstado = System.currentTimeMillis(); // Reinicia o tempo para o novo estado
-        exibirStatusCurto();
+        System.out.println(estadoAtual);
+        System.out.println("Estado atual: " + estadoAtual + " (" + tempoRestante + " segundos)");
     }
-
-    private static void entrarModoManutencao() {
-        if (emManutencao) {
+    
+    /**
+     * Muda o semáforo para o modo de manutenção.
+     */
+    public static void transicaoModoManutencao() {
+        if (!modo.equals("NORMAL")) {
             System.out.println("Já está em modo de manutenção.");
             return;
         }
-        System.out.println(estadoAtual + " → " + EstadoSemaforo.PISCA_AMARELO);
-        estadoAtual = EstadoSemaforo.PISCA_AMARELO;
-        emManutencao = true;
-        System.out.println("Estado atual: PISCA_AMARELO (modo manutenção)");
+        System.out.print(estadoAtual + " → " + PISCA_AMARELO + "\n");
+        estadoAtual = PISCA_AMARELO;
+        modo = "MANUTENCAO";
+        tempoRestante = -1; // Tempo indefinido
+        System.out.println("Estado atual: " + PISCA_AMARELO + " (modo manutenção)");
     }
 
-    private static void sairModoManutencao() {
-        if (!emManutencao) {
-            System.out.println("Não está em modo de manutenção.");
+    /**
+     * Retorna o semáforo ao modo de operação normal.
+     */
+    public static void transicaoModoNormal() {
+        if (modo.equals("NORMAL")) {
+            System.out.println("Já está em modo normal.");
             return;
         }
-        System.out.println(estadoAtual + " → " + EstadoSemaforo.VERDE);
-        estadoAtual = EstadoSemaforo.VERDE; // Retorna para VERDE
-        emManutencao = false;
-        tempoInicialEstado = System.currentTimeMillis(); // Reinicia o tempo
-        System.out.println("Estado atual: VERDE (" + TEMPO_VERDE + " segundos)");
+        System.out.print(estadoAtual + " → " + VERDE + "\n");
+        estadoAtual = VERDE;
+        modo = "NORMAL";
+        tempoRestante = 30;
+        System.out.println("Estado atual: " + VERDE + " (" + tempoRestante + " segundos)");
         System.out.println("Sistema retomou operação normal");
     }
 
-    private static void exibirStatus() {
+    /**
+     * Exibe o status atual do semáforo.
+     */
+    public static void exibirStatus() {
         System.out.println("Estado: " + estadoAtual);
-        if (emManutencao) {
-            System.out.println("Modo: MANUTENÇÃO");
-            System.out.println("Tempo restante: N/A");
-            System.out.println("Próximo estado: N/A");
-        } else {
-            System.out.println("Tempo restante: " + getTempoRestante(estadoAtual, tempoInicialEstado) + " segundos");
-            System.out.println("Próximo estado: " + getProximoEstadoNome(estadoAtual));
-            System.out.println("Modo: NORMAL");
+        if (tempoRestante != -1) {
+            System.out.println("Tempo restante: " + tempoRestante + " segundos");
         }
-        System.out.println("Ciclo atual: " + cicloAtual);
-    }
-
-    private static void exibirStatusCurto() {
-        System.out.print("Estado atual: " + estadoAtual);
-        if (estadoAtual == EstadoSemaforo.VERDE) {
-            System.out.println(" (" + TEMPO_VERDE + " segundos)");
-        } else if (estadoAtual == EstadoSemaforo.AMARELO) {
-            System.out.println(" (" + TEMPO_AMARELO + " segundos)");
-        } else if (estadoAtual == EstadoSemaforo.VERMELHO) {
-            System.out.println(" (" + TEMPO_VERMELHO + " segundos)");
-        } else {
-            System.out.println();
+        String proximoEstado = "N/A";
+        switch (estadoAtual) {
+            case VERDE: proximoEstado = AMARELO; break;
+            case AMARELO: proximoEstado = VERMELHO; break;
+            case VERMELHO: proximoEstado = VERDE; break;
         }
-    }
-
-    private static long getTempoRestante(EstadoSemaforo estado, long inicio) {
-        long tempoDecorrido = (System.currentTimeMillis() - inicio) / 1000; // Em segundos
-        int duracaoTotal;
-        switch (estado) {
-            case VERDE:
-                duracaoTotal = TEMPO_VERDE;
-                break;
-            case AMARELO:
-                duracaoTotal = TEMPO_AMARELO;
-                break;
-            case VERMELHO:
-                duracaoTotal = TEMPO_VERMELHO;
-                break;
-            default:
-                return 0; // Para PISCA_AMARELO ou outros que não têm tempo fixo
-        }
-        return Math.max(0, duracaoTotal - tempoDecorrido);
-    }
-
-    private static String getProximoEstadoNome(EstadoSemaforo estado) {
-        switch (estado) {
-            case VERDE: return "AMARELO";
-            case AMARELO: return "VERMELHO";
-            case VERMELHO: return "VERDE";
-            default: return "N/A";
-        }
+        System.out.println("Próximo estado: " + proximoEstado);
+        System.out.println("Modo: " + modo);
+        System.out.println("Ciclo atual: " + ciclo);
     }
 }

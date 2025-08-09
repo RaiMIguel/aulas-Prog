@@ -1,74 +1,68 @@
 public class Questoes81 {
+
+    /**
+     * @param args
+     * Enunciado: Implemente um validador básico de email.
+     *
+     * Objetivos:
+     * - Validar formato básico de email
+     * - Verificar presença de @ e .
+     * - Implementar regras simples
+     */
     public static void main(String[] args) {
-        String[] emails = {
-            "naruto@konoha.com",
-            "sasuke.uchiha@gmail",
-            "@teste.com",
-            "sakura@",
-            "kakashi@anbu.ninja.academy.com.br", // Exemplo mais complexo
-            "email@.com", // Ponto logo após @
-            "email@dominio" // Sem ponto
-        };
-
-        System.out.println("Validando emails:\n");
-
+        String[] emails = {"naruto@konoha.com", "sasuke.uchiha@gmail", "@teste.com", "sakura@"};
+        
+        System.out.println("Validando emails:");
         for (int i = 0; i < emails.length; i++) {
-            String email = emails[i];
-            System.out.println((i + 1) + ". \"" + email + "\"");
-            boolean valido = true;
-            String motivoInvalido = "";
+            System.out.println("\n" + (i + 1) + ". \"" + emails[i] + "\"");
+            validarEmail(emails[i]);
+        }
+    }
 
-            int atIndex = email.indexOf('@');
-            int lastAtIndex = email.lastIndexOf('@');
+    /**
+     * Valida um email com base em regras básicas de formatação.
+     * @param email O email a ser validado.
+     * @return true se o email for válido, false caso contrário.
+     */
+    public static boolean validarEmail(String email) {
+        int atIndex = email.indexOf('@');
+        int dotIndex = email.lastIndexOf('.');
 
-            // Regra 1: Deve ter exatamente 1 @
-            if (atIndex == -1 || atIndex != lastAtIndex) {
-                System.out.println("   ✗ Não tem exatamente 1 @");
-                valido = false;
-                motivoInvalido = "Número incorreto de '@'";
-            } else {
-                System.out.println("   ✓ Tem exatamente 1 @");
+        boolean temExatamenteUmArroba = atIndex != -1 && atIndex == email.lastIndexOf('@');
+        boolean temPontoAposArroba = atIndex < dotIndex;
+        boolean parteAntesNaoVazia = atIndex > 0;
+        boolean parteDepoisNaoVazia = dotIndex < email.length() - 1 && atIndex < dotIndex - 1;
 
-                // Regra 3: Parte antes do @ não está vazia
-                if (atIndex == 0) {
-                    System.out.println("   ✗ Parte antes do @ está vazia");
-                    valido = false;
-                    motivoInvalido = "Parte antes do '@' vazia";
-                } else {
-                    System.out.println("   ✓ Parte antes do @ não está vazia");
-                }
+        if (temExatamenteUmArroba) {
+            System.out.println("   ✓ Tem exatamente 1 @");
+        } else {
+            System.out.println("   ✗ Tem exatamente 1 @");
+        }
+        
+        if (temPontoAposArroba) {
+            System.out.println("   ✓ Tem pelo menos 1 ponto após @");
+        } else {
+            System.out.println("   ✗ Não tem ponto após @");
+        }
+        
+        if (parteAntesNaoVazia) {
+            System.out.println("   ✓ Parte antes do @ não está vazia");
+        } else {
+            System.out.println("   ✗ Parte antes do @ está vazia");
+        }
+        
+        if (parteDepoisNaoVazia) {
+            System.out.println("   ✓ Parte após @ não está vazia");
+        } else {
+            System.out.println("   ✗ Parte após @ está vazia");
+        }
 
-                // Regra 4: Parte após @ não está vazia
-                if (atIndex == email.length() - 1) {
-                    System.out.println("   ✗ Parte após @ está vazia");
-                    valido = false;
-                    motivoInvalido = "Parte após o '@' vazia";
-                } else {
-                    System.out.println("   ✓ Parte após @ não está vazia");
-                }
-
-                // Se as validações básicas de @ e partes não vazias passaram, verifica o ponto
-                if (valido) {
-                    String dominio = email.substring(atIndex + 1);
-                    int dotIndex = dominio.indexOf('.');
-
-                    // Regra 2: Deve ter pelo menos 1 . após @ e não ser o primeiro caractere após @
-                    if (dotIndex == -1 || dotIndex == 0) { // dotIndex == 0 significa que o ponto está logo após o '@'
-                        System.out.println("   ✗ Não tem ponto após @ ou ponto está na posição incorreta");
-                        valido = false;
-                        motivoInvalido = "Ponto ausente ou mal posicionado após '@'";
-                    } else {
-                        System.out.println("   ✓ Tem pelo menos 1 ponto após @");
-                    }
-                }
-            }
-            
-            if (valido) {
-                System.out.println("   Resultado: Email VÁLIDO");
-            } else {
-                System.out.println("   Resultado: Email INVÁLIDO" + (motivoInvalido.isEmpty() ? "" : " (" + motivoInvalido + ")"));
-            }
-            System.out.println();
+        if (temExatamenteUmArroba && temPontoAposArroba && parteAntesNaoVazia && parteDepoisNaoVazia) {
+            System.out.println("   Resultado: Email VÁLIDO");
+            return true;
+        } else {
+            System.out.println("   Resultado: Email INVÁLIDO");
+            return false;
         }
     }
 }

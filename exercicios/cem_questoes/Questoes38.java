@@ -1,35 +1,59 @@
 import java.util.Scanner;
 
 public class Questoes38 {
+
+    /**
+     * @param args
+     * Enunciado: Calcule a soma dos dígitos de um número.
+     *
+     * Objetivos:
+     * - Extrair dígitos individuais
+     * - Usar divisão e módulo
+     * - Acumular resultados
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.print("Digite um número: ");
-        int numeroOriginal = scanner.nextInt();
-        int numero = numeroOriginal;
+        int numero = scanner.nextInt();
 
-        int somaDigitos = 0;
-        StringBuilder digitosProcesso = new StringBuilder();
-
-        if (numero == 0) {
-            digitosProcesso.append("0");
-            somaDigitos = 0;
-        } else {
-            while (numero > 0) {
-                int digito = numero % 10;
-                somaDigitos += digito;
-                digitosProcesso.insert(0, digito); // Adiciona o dígito no início para manter a ordem
-                if (numero / 10 > 0) {
-                    digitosProcesso.insert(0, " + ");
-                }
-                numero /= 10;
-            }
-        }
-
-        System.out.println("Número: " + numeroOriginal);
-        System.out.println("Dígitos: " + digitosProcesso.toString());
-        System.out.println("Soma dos dígitos: " + somaDigitos);
-
+        mostrarProcessoSomaDigitos(numero);
+        int soma = somarDigitos(numero);
+        
+        System.out.println("Soma dos dígitos: " + soma);
+        
         scanner.close();
+    }
+
+    /**
+     * Calcula a soma dos dígitos de um número.
+     * @param numero O número a ser somado.
+     * @return A soma dos dígitos do número.
+     */
+    public static int somarDigitos(int numero) {
+        int soma = 0;
+        int temp = numero;
+        while (temp > 0) {
+            soma += temp % 10;
+            temp /= 10;
+        }
+        return soma;
+    }
+
+    /**
+     * Mostra o processo de extração e soma dos dígitos de um número.
+     * @param numero O número a ser exibido.
+     */
+    public static void mostrarProcessoSomaDigitos(int numero) {
+        System.out.println("\nNúmero: " + numero);
+        System.out.print("Dígitos: ");
+        
+        int temp = numero;
+        String processo = "";
+        while (temp > 0) {
+            processo = (temp % 10) + ((temp > 9) ? " + " : "") + processo;
+            temp /= 10;
+        }
+        System.out.println(processo);
     }
 }

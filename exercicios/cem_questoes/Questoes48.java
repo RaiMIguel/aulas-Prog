@@ -1,36 +1,44 @@
+import java.util.Arrays;
+
 public class Questoes48 {
+
+    /**
+     * @param args
+     * Enunciado: Encontre o segundo maior elemento de um array.
+     * Dados: {85, 92, 78, 96, 87, 91}
+     *
+     * Objetivos:
+     * - Encontrar múltiplos extremos
+     * - Evitar duplicatas
+     * - Lidar com casos especiais
+     */
     public static void main(String[] args) {
         int[] numeros = {85, 92, 78, 96, 87, 91};
+        
+        System.out.println("Array: " + Arrays.toString(numeros));
+        
+        encontrarSegundoMaior(numeros);
+    }
 
-        System.out.print("Array: [");
-        for (int i = 0; i < numeros.length; i++) {
-            System.out.print(numeros[i] + (i == numeros.length - 1 ? "" : ", "));
-        }
-        System.out.println("]");
-
-        if (numeros.length < 2) {
-            System.out.println("Não há segundo maior elemento em um array com menos de 2 elementos.");
-            return;
-        }
-
+    /**
+     * Encontra e exibe o maior e o segundo maior elemento de um array.
+     * @param array O array de inteiros.
+     */
+    public static void encontrarSegundoMaior(int[] array) {
         int maior = Integer.MIN_VALUE;
         int segundoMaior = Integer.MIN_VALUE;
-        boolean todosIguais = true;
 
-        for (int i = 0; i < numeros.length; i++) {
-            if (i > 0 && numeros[i] != numeros[0]) {
-                todosIguais = false;
-            }
-            if (numeros[i] > maior) {
+        for (int numero : array) {
+            if (numero > maior) {
                 segundoMaior = maior;
-                maior = numeros[i];
-            } else if (numeros[i] > segundoMaior && numeros[i] < maior) {
-                segundoMaior = numeros[i];
+                maior = numero;
+            } else if (numero > segundoMaior && numero != maior) {
+                segundoMaior = numero;
             }
         }
-
-        if (todosIguais || segundoMaior == Integer.MIN_VALUE) { // Condição para "Não há segundo maior"
-            System.out.println("Não há segundo maior.");
+        
+        if (segundoMaior == Integer.MIN_VALUE || maior == segundoMaior) {
+            System.out.println("Não há segundo maior elemento.");
         } else {
             System.out.println("Maior elemento: " + maior);
             System.out.println("Segundo maior: " + segundoMaior);

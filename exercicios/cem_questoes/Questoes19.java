@@ -1,23 +1,30 @@
 import java.util.Scanner;
 
 public class Questoes19 {
-        public static void main(String[] args) {
+
+    /**
+     * @param args
+     * Enunciado: Crie um programa que peça a idade do usuário e continue
+     * pedindo até que uma idade válida (0-120) seja inserida.
+     *
+     * Objetivos:
+     * - Validar entrada do usuário
+     * - Usar laços para repetição
+     * - Tratar entradas inválidas
+     */
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int idade;
-
-        while (true) {
+        
+        do {
             System.out.print("Digite sua idade: ");
             idade = scanner.nextInt();
-
-            if (idade >= 0 && idade <= 120) {
-                break; // Idade válida, sai do loop
-            } else {
-                System.out.println("Idade inválida! Digite novamente:");
-            }
-        }
-
-        System.out.println("Idade válida registrada: " + idade + " anos");
-
+            String mensagem = (idade >= 0 && idade <= 120) 
+                              ? "Idade válida registrada: " + idade + " anos" 
+                              : "Idade inválida! Digite novamente:";
+            System.out.println(mensagem);
+        } while (idade < 0 || idade > 120);
+        
         scanner.close();
     }
 }

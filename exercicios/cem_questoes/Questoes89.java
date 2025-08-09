@@ -2,17 +2,40 @@ import java.util.Arrays;
 
 public class Questoes89 {
 
-    // Implementa o Bubble Sort
-    public static int[] ordenarArray(int[] array) {
-        int n = array.length;
+    /**
+     * @param args
+     * Enunciado: Crie um método que ordene um array e retorne o array ordenado.
+     *
+     * Objetivos:
+     * - Método que modifica array
+     * - Implementar algoritmo de ordenação
+     * - Retornar resultado
+     */
+    public static void main(String[] args) {
+        int[] array = {64, 34, 25, 12, 22, 11, 90};
+        
+        System.out.println("Array original: " + Arrays.toString(array));
+        System.out.println("Ordenando array...");
+        
+        ordenarArray(array);
+        
+        System.out.println("Array ordenado: " + Arrays.toString(array));
+    }
+
+    /**
+     * Ordena um array de inteiros usando o algoritmo Bubble Sort e exibe estatísticas.
+     * @param array O array a ser ordenado.
+     */
+    public static void ordenarArray(int[] array) {
+        System.out.println("Método utilizado: Bubble Sort");
         int comparacoes = 0;
         int trocas = 0;
-
+        int n = array.length;
+        
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 comparacoes++;
                 if (array[j] > array[j + 1]) {
-                    // Troca array[j] e array[j+1]
                     int temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
@@ -20,24 +43,8 @@ public class Questoes89 {
                 }
             }
         }
-        System.out.println("Método utilizado: Bubble Sort");
+        
         System.out.println("Comparações realizadas: " + comparacoes);
         System.out.println("Trocas realizadas: " + trocas);
-        return array;
-    }
-
-    public static void main(String[] args) {
-        int[] arrayTeste = {64, 34, 25, 12, 22, 11, 90};
-
-        System.out.println("Array original: " + Arrays.toString(arrayTeste));
-        System.out.println("Ordenando array...");
-        
-        long startTime = System.nanoTime();
-        int[] arrayOrdenado = ordenarArray(arrayTeste); // O método modifica o array original
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime) / 1_000_000; // Tempo em milissegundos
-
-        System.out.println("Array ordenado: " + Arrays.toString(arrayOrdenado));
-        System.out.println("Tempo de execução: " + duration + " ms");
     }
 }

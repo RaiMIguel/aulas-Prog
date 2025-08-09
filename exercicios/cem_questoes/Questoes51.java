@@ -1,33 +1,53 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Questoes51 {
+
+    /**
+     * @param args
+     * Enunciado: Remova elementos duplicados de um array mantendo apenas a
+     * primeira ocorrência.
+     * Dados: {1, 3, 2, 3, 4, 2, 5, 1}
+     *
+     * Objetivos:
+     * - Detectar duplicatas
+     * - Manter ordem original
+     * - Criar array sem repetições
+     */
     public static void main(String[] args) {
-        int[] original = {1, 3, 2, 3, 4, 2, 5, 1};
+        int[] numeros = {1, 3, 2, 3, 4, 2, 5, 1};
         
-        System.out.println("Array original: " + Arrays.toString(original));
+        System.out.println("Array original: " + Arrays.toString(numeros));
         System.out.println("Removendo duplicatas...");
+        
+        int[] resultado = removerDuplicatas(numeros);
+        
+        System.out.println("Array sem duplicatas: " + Arrays.toString(resultado));
+        System.out.println("Elementos removidos: " + (numeros.length - resultado.length) + " duplicatas");
+    }
 
-        List<Integer> semDuplicatasList = new ArrayList<>();
-        int duplicatasRemovidas = 0;
-
-        for (int i = 0; i < original.length; i++) {
-            boolean jaExiste = false;
-            for (int j = 0; j < semDuplicatasList.size(); j++) {
-                if (semDuplicatasList.get(j) == original[i]) {
-                    jaExiste = true;
+    /**
+     * Remove elementos duplicados de um array, mantendo a ordem original.
+     * @param array O array com possíveis duplicatas.
+     * @return Um novo array sem os elementos duplicados.
+     */
+    public static int[] removerDuplicatas(int[] array) {
+        int[] temp = new int[array.length];
+        int novoTamanho = 0;
+        
+        for (int i = 0; i < array.length; i++) {
+            boolean isDuplicado = false;
+            for (int j = 0; j < novoTamanho; j++) {
+                if (array[i] == temp[j]) {
+                    isDuplicado = true;
                     break;
                 }
             }
-            if (!jaExiste) {
-                semDuplicatasList.add(original[i]);
-            } else {
-                duplicatasRemovidas++;
+            if (!isDuplicado) {
+                temp[novoTamanho] = array[i];
+                novoTamanho++;
             }
         }
         
-        System.out.println("Array sem duplicatas: " + semDuplicatasList.toString());
-        System.out.println("Elementos removidos: " + duplicatasRemovidas + " duplicatas");
+        return Arrays.copyOf(temp, novoTamanho);
     }
 }

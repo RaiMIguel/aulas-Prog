@@ -1,30 +1,36 @@
 import java.util.Scanner;
 
 public class Questoes18 {
-        public static void main(String[] args) {
+
+    /**
+     * @param args
+     * Enunciado: Leia números inteiros do usuário até que ele digite 0.
+     * Ao final, exiba quantos números foram digitados e a soma total.
+     *
+     * Objetivos:
+     * - Usar laços com condição de parada
+     * - Acumular valores
+     * - Contar iterações
+     */
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        
+        int somaTotal = 0;
         int contador = 0;
-        int soma = 0;
         int numero;
 
         System.out.println("Digite números (0 para parar):");
-
-        while (true) {
-            numero = scanner.nextInt();
-
-            if (numero == 0) {
-                break;
-            }
-
-            soma += numero;
+        
+        while ((numero = scanner.nextInt()) != 0) {
+            somaTotal += numero;
             contador++;
         }
 
         System.out.println("\n=== RELATÓRIO ===");
         System.out.println("Números digitados: " + contador);
-        System.out.println("Soma total: " + soma);
+        System.out.println("Soma total: " + somaTotal);
         System.out.println("Programa encerrado.");
-
+        
         scanner.close();
     }
 }

@@ -1,8 +1,18 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Questoes71 {
+
+    /**
+     * @param args
+     * Enunciado: Encontre o elemento mais frequente em uma matriz.
+     *
+     * Objetivos:
+     * - Contar frequência de elementos
+     * - Encontrar o mais comum
+     * - Lidar com empates
+     */
     public static void main(String[] args) {
         int[][] matriz = {
             {1, 2, 3, 2},
@@ -11,22 +21,37 @@ public class Questoes71 {
         };
 
         System.out.println("Matriz:");
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
+        exibirMatriz(matriz);
+
+        encontrarMaisFrequente(matriz);
+    }
+
+    /**
+     * Exibe uma matriz de inteiros, formatada.
+     * @param matriz A matriz a ser exibida.
+     */
+    public static void exibirMatriz(int[][] matriz) {
+        for (int[] linha : matriz) {
+            for (int elemento : linha) {
+                System.out.printf("%d ", elemento);
             }
             System.out.println();
         }
+    }
 
+    /**
+     * Encontra e exibe o elemento mais frequente em uma matriz.
+     * @param matriz A matriz de inteiros.
+     */
+    public static void encontrarMaisFrequente(int[][] matriz) {
         Map<Integer, Integer> frequencias = new HashMap<>();
         
-        for (int i = 0; i < matriz.length; i++) {
-            for (int j = 0; j < matriz[i].length; j++) {
-                int elemento = matriz[i][j];
+        for (int[] linha : matriz) {
+            for (int elemento : linha) {
                 frequencias.put(elemento, frequencias.getOrDefault(elemento, 0) + 1);
             }
         }
-
+        
         System.out.println("\nContagem de frequências:");
         int maxFrequencia = 0;
         for (Map.Entry<Integer, Integer> entry : frequencias.entrySet()) {
@@ -35,21 +60,14 @@ public class Questoes71 {
                 maxFrequencia = entry.getValue();
             }
         }
-
+        
         System.out.print("\nElemento mais frequente: ");
-        ArrayList<Integer> elementosMaisFrequentes = new ArrayList<>();
+        StringBuilder maisFrequentes = new StringBuilder();
         for (Map.Entry<Integer, Integer> entry : frequencias.entrySet()) {
             if (entry.getValue() == maxFrequencia) {
-                elementosMaisFrequentes.add(entry.getKey());
+                maisFrequentes.append(entry.getKey()).append(" ");
             }
         }
-
-        for (int i = 0; i < elementosMaisFrequentes.size(); i++) {
-            System.out.print(elementosMaisFrequentes.get(i));
-            if (i < elementosMaisFrequentes.size() - 1) {
-                System.out.print(", ");
-            }
-        }
-        System.out.println(" (aparece " + maxFrequencia + " vezes)");
+        System.out.println(maisFrequentes.toString().trim() + " (aparece " + maxFrequencia + " vezes)");
     }
 }
