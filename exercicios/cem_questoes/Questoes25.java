@@ -38,8 +38,10 @@ public class Questoes25 {
             return "Nadador de " + idade + " anos: Categoria Juvenil";
         } else if (idade >= 18 && idade <= 65) {
             return "Nadador de " + idade + " anos: Categoria Adulto";
-        } else { // idade > 65
+        } else if (idade > 65) { // idade > 65
             return "Nadador de " + idade + " anos: Categoria Senior";
         }
+
+        return "Idade invalida";
     }
 }

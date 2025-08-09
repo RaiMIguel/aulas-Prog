@@ -25,6 +25,6 @@ public class Questoes12 {
 
         System.out.println("Valor original (double): " + valorOriginal);
         System.out.println("Valor após casting (int): " + valorAposCasting);
-        System.out.printf("Precisão perdida: %.4f%n", precisaoPerdida);
+        System.out.printf("Precisão perdida: %.4f \n", precisaoPerdida);
     }
 }
