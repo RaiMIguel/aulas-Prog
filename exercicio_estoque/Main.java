@@ -61,17 +61,15 @@ public class Main {
                     boolean temIgual = false;
                     for (String nomeLista : nomes) {
                         if (nomeLista.equals(nome)) {
-                            temIgual = !temIgual;
-                        }
+                            temIgual = true;
+                        System.out.println("Este Nome já está registrado, digite outro!\n ");
+                        break;
+                        } 
                     }
-                    if (temIgual) {
-                        System.out.println("Este Nome já está registrado, digite outro: ");
-                        nome = scanner.nextLine(); // adicionei para receber o outro nome
-
-                    } else {
+                    if (!temIgual){
                         nomes.add(nome);
                         break;
-                    }
+                }
                 }
 
                 System.out.println("Digite a marca: ");
@@ -123,7 +121,7 @@ public class Main {
                       String temDesconto = scanner.nextLine().toLowerCase();
 
                       if (temDesconto.equals("s")) {
-                        System.out.println("Digite o desconto");
+                        System.out.println("Digite o desconto em porcentagem: ");
                         Double desconto = scanner.nextDouble();
                         scanner.nextLine();
                         descontos.add(desconto);
@@ -142,7 +140,7 @@ public class Main {
                 Double valorVendaNovo = valoresVenda.get(valoresVenda.size() - 1);
                 Double valorDescNovo = descontos.get(descontos.size() - 1);
 
-                Double valorVendaDesconto = valorVendaNovo - valorDescNovo;
+                Double valorVendaDesconto = valorVendaNovo - (valorVendaNovo * (valorDescNovo/100));
                 valoresVendasComDescontos.add(valorVendaDesconto);
                 
                 controleVendidos.add(false);
@@ -208,11 +206,25 @@ public class Main {
                         System.out.println("Deseja trocar o nome?\ns - sim\nn - não ");
                         String desejoTrocar = scanner.nextLine().toLowerCase();
                         if (desejoTrocar.equals("s")){
-                            System.out.println("Digite o novo nome: ");
-                            String novoNome = scanner.nextLine();
 
-                            nomes.set(indiceDoId, novoNome);
-                            System.out.println("Nome atualizado com sucesso! ");
+                            while (true) {
+                                System.out.println("Digite o novo nome: ");
+                                String novoNome = scanner.nextLine();
+                                boolean temIgual = false;
+
+                                for (String nomeLista : nomes) {
+                                    if (nomeLista.equals(novoNome)) {
+                                    temIgual = true;
+                                    System.out.println("Este Nome já está registrado, digite outro!\n ");
+                                    break;
+                                    } 
+                                }
+                                if (!temIgual){
+                                    nomes.set(indiceDoId, novoNome);
+                                    System.out.println("Nome atualizado com sucesso! ");
+                                    break;
+                            }
+                            }
                         }
                         else if (desejoTrocar.equals("n")) {
                             System.out.println("Item não modificado! ");
@@ -256,7 +268,7 @@ public class Main {
                         System.out.println("Deseja trocar o desconto?\ns - sim\nn - não ");
                         desejoTrocar = scanner.nextLine();
                         if (desejoTrocar.equals("s")){
-                            System.out.println("Digite o novo desconto: ");
+                            System.out.println("Digite o novo  em porcentagem: ");
                             Double novoDesconto = scanner.nextDouble();
                             scanner.nextLine();
 
@@ -296,7 +308,7 @@ public class Main {
                         Double valorVendaAtualizado = valoresVenda.get(indiceDoId);
                         Double valorDescAtualizado = descontos.get(indiceDoId);
 
-                        Double valorVendaDesconto = valorVendaAtualizado - valorDescAtualizado;
+                        Double valorVendaDesconto = valorVendaAtualizado - (valorVendaAtualizado * (valorDescAtualizado/100));
                         valoresVendasComDescontos.set(indiceDoId, valorVendaDesconto);
 
                         System.out.println("Deseja trocar o Status: VENDIDO/NÃO VENDIDO?\ns - sim\nn - não ");
@@ -322,12 +334,9 @@ public class Main {
                         else if (desejoTrocar.equals("n")) {
                             System.out.println("Item não modificado! ");
                         }
-                    
-                    else if (indiceDoId != idBusca){
+                    } else {
                         System.out.println("Id não encontrado!");
-                        break;
                     }
-                }
              }
             } else if (escolha.equals("5")) {
             
@@ -368,7 +377,8 @@ public class Main {
             } else if (escolha.equals("0")) {
                 break;
             } else {
-            
+                System.out.println("Opção inválida");
+
             }
             //
             System.out.println("Você deseja voltar ao menú?\ns - sim\nn - não");
@@ -382,7 +392,6 @@ public class Main {
                 else {
                     System.out.println("Opção inválida");
                 }
-            //
         }
     
         scanner.close();
@@ -399,10 +408,10 @@ public class Main {
         System.out.println("Tamanho: " + tamanhos.get(indice));
         System.out.println("Cor: " + cores.get(indice));
         System.out.println("Marca: " + marcas.get(indice));
-        System.out.println("Descontos: " + descontos.get(indice));
-        System.out.println("Valor de aquisição: " + valoresCompra.get(indice));
-        System.out.println("Valor de venda: " + valoresVenda.get(indice));
-        System.out.println("Valor de venda com Desconto: " + valoresVendasComDescontos.get(indice));
+        System.out.println("Descontos: " + descontos.get(indice) +"%");
+        System.out.println("Valor de aquisição: R$" + valoresCompra.get(indice));
+        System.out.println("Valor de venda: R$" + valoresVenda.get(indice));
+        System.out.println("Valor de venda com Desconto: R$" + valoresVendasComDescontos.get(indice));
         System.out.println("Status de venda: " + (controleVendidos.get(indice) ? "VENDIDO" : "NÃO VENDIDO"));
         System.out.println();
         System.out.println("---------------------------------------------");
