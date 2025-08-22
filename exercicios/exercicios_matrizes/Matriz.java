@@ -1,3 +1,4 @@
+package exercicios.exercicios_matrizes;
 // (dicas do naruto) AVALIAÇÃO: 20/100
 // (dicas do naruto) Este arquivo está vazio! Precisa implementar o exercício de matrizes
 

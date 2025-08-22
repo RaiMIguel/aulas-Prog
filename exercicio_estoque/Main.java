@@ -1,6 +1,7 @@
 package exercicio_estoque;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -39,10 +40,11 @@ public class Main {
             System.out.println("---------------------------------------------");
 
             System.out.println("1 - Cadastrar camisa");
-            System.out.println("2 - Listar camisas");
+            System.out.println("2 - Listar todas camisas cadastradas");
             System.out.println("3 - Procurar camisa por ID");
             System.out.println("4 - Modificar ou atualizar uma camisa pelo ID");
             System.out.println("5 - Deletar camisa pelo ID");
+            System.out.println("6 - Listar camisas por atributos especificos");
             System.out.println("0 - Sair do Sistema");
             escolha = scanner.nextLine();
 
@@ -91,50 +93,72 @@ public class Main {
                 String cor = scanner.nextLine().toUpperCase();
                 cores.add(cor);
 
-                while (true) {
-                    System.out.println("Digite o valor de compra");
-                    Double valorCompra = scanner.nextDouble();
+                boolean entradaValida = false;
 
-                    if (valorCompra > 0) {
-                        valoresCompra.add(valorCompra);
-                        break;
-                    } else {
-                        System.out.println("Valor invalido");
-                    }
-                }
-
-                while (true) {
-                    System.out.println("Digite o Valor de venda");
-                    Double valorVenda = scanner.nextDouble();
-                    scanner.nextLine();
-
-                    if (valorVenda > 0) {
-                        valoresVenda.add(valorVenda);
-                        break;
-                    } else {
-                        System.out.println("Valor invalido");
-                    }
-                }
-                
-                while (true) {
-                      System.out.println("Tem algum desconto?\ns - sim\nn - não");
-                      String temDesconto = scanner.nextLine().toLowerCase();
-
-                      if (temDesconto.equals("s")) {
-                        System.out.println("Digite o desconto em porcentagem: ");
-                        Double desconto = scanner.nextDouble();
+                while (!entradaValida) {
+                    try {
+                        System.out.println("Digite o valor de compra");
+                        Double valorCompra = scanner.nextDouble();
                         scanner.nextLine();
-                        descontos.add(desconto);
-                        break;
-                      }
-                      else if (temDesconto.equals("n")) { 
-                        Double desconto = 0.0;
-                        descontos.add(desconto);
-                        break;
-                      }
-                       else {
-                        System.out.println("Valor invalido");
+
+                        if (valorCompra > 0) {
+                            valoresCompra.add(valorCompra);
+                            entradaValida = true;
+                        }else {
+                            System.out.println("Valor invalido");
                         }
+                    }
+                catch (InputMismatchException e){
+                    System.out.println("Erro: Digite um valor numérico para o preço.");
+                    scanner.nextLine();
+                    }
+                }
+
+                entradaValida = false;
+                while (!entradaValida) {
+                    try {
+
+                        System.out.println("Digite o Valor de venda");
+                        Double valorVenda = scanner.nextDouble();
+                        scanner.nextLine();
+
+                        if (valorVenda > 0) {
+                            valoresVenda.add(valorVenda);
+                            entradaValida = true;
+                        } else {
+                            System.out.println("Valor invalido");
+                        }
+                    }catch (InputMismatchException e){
+                        System.out.println("Erro: Digite um valor numérico para o preço.");
+                        scanner.nextLine();
+                    }
+                }
+                entradaValida = false;
+                while (!entradaValida) {
+
+                    try{
+                        System.out.println("Tem algum desconto?\ns - sim\nn - não");
+                        String temDesconto = scanner.nextLine().toLowerCase();
+
+                        if (temDesconto.equals("s")) {
+                            System.out.println("Digite o desconto em porcentagem: ");
+                            Double desconto = scanner.nextDouble();
+                            scanner.nextLine();
+                            descontos.add(desconto);
+                            entradaValida = true;
+                        }
+                        else if (temDesconto.equals("n")) { 
+                            Double desconto = 0.0;
+                            descontos.add(desconto);
+                            entradaValida = true;
+                        }
+                        else {
+                            System.out.println("Valor invalido");
+                            }
+                    }catch (InputMismatchException e){
+                        System.out.println("Erro: Digite apenas valor numérico para a porcentagem.");
+                        scanner.nextLine();
+                    } 
                 }
 
                 Double valorVendaNovo = valoresVenda.get(valoresVenda.size() - 1);
@@ -245,7 +269,7 @@ public class Main {
                         desejoTrocar = scanner.nextLine();
                         if (desejoTrocar.equals("s")){
                             System.out.println("Digite a nova cor: ");
-                            String novaCor = scanner.nextLine();
+                            String novaCor = scanner.nextLine().toUpperCase();
 
                             cores.set(indiceDoId, novaCor);
                             System.out.println("Cor atualizada com sucesso! ");
@@ -265,44 +289,78 @@ public class Main {
                         else if (desejoTrocar.equals("n")) {
                             System.out.println("Item não modificado! ");
                         }
-                        System.out.println("Deseja trocar o desconto?\ns - sim\nn - não ");
-                        desejoTrocar = scanner.nextLine();
-                        if (desejoTrocar.equals("s")){
-                            System.out.println("Digite o novo  em porcentagem: ");
-                            Double novoDesconto = scanner.nextDouble();
-                            scanner.nextLine();
 
-                            descontos.set(indiceDoId, novoDesconto);
-                            System.out.println("Desconto atualizado com sucesso! ");
-                        }
-                        else if (desejoTrocar.equals("n")) {
-                            System.out.println("Item não modificado! ");
-                        }
-                        System.out.println("Deseja trocar o valor de aquisição?\ns - sim\nn - não ");
-                        desejoTrocar = scanner.nextLine();
-                        if (desejoTrocar.equals("s")){
-                            System.out.println("Digite o novo valor de aquisição: ");
-                            Double novoValorCompra = scanner.nextDouble();
-                            scanner.nextLine();
+                        boolean entradaValida = false;
+                        while (!entradaValida) {
+                            try {
+                                System.out.println("Deseja trocar o desconto?\ns - sim\nn - não ");
+                                desejoTrocar = scanner.nextLine();
 
-                            valoresCompra.set(indiceDoId, novoValorCompra);
-                            System.out.println("Valor de compra atualizado com sucesso! ");
-                        }
-                        else if (desejoTrocar.equals("n")) {
-                            System.out.println("Item não modificado! ");
-                        }
-                        System.out.println("Deseja trocar o valor de venda?\ns - sim\nn - não ");
-                        desejoTrocar = scanner.nextLine();
-                        if (desejoTrocar.equals("s")){
-                            System.out.println("Digite o novo valor de venda: ");
-                            Double novoValorVenda = scanner.nextDouble();
-                            scanner.nextLine();
+                                if (desejoTrocar.equals("s")){
+                                    System.out.println("Digite o novo desconto em porcentagem: ");
+                                    Double novoDesconto = scanner.nextDouble();
+                                    scanner.nextLine();
 
-                            valoresVenda.set(indiceDoId, novoValorVenda);
-                            System.out.println("Valor de venda atualizado com sucesso! ");
+                                    descontos.set(indiceDoId, novoDesconto);
+                                    System.out.println("Desconto atualizado com sucesso! ");
+                                    entradaValida = true;
+                                }
+                                else if (desejoTrocar.equals("n")) {
+                                    System.out.println("Item não modificado! ");
+                                    entradaValida = true;
+                                }
+                            }
+                                catch (InputMismatchException e){
+                                    System.out.println("Erro: Digite um valor numérico para o desconto.");
+                                    scanner.nextLine();
+                                }
                         }
-                        else if (desejoTrocar.equals("n")) {
-                            System.out.println("Item não modificado! ");
+                        entradaValida = false;
+                        while (!entradaValida) {
+                            try{
+                                System.out.println("Deseja trocar o valor de aquisição?\ns - sim\nn - não ");
+                                desejoTrocar = scanner.nextLine();
+                                if (desejoTrocar.equals("s")){
+                                    System.out.println("Digite o novo valor de aquisição: ");
+                                    Double novoValorCompra = scanner.nextDouble();
+                                    scanner.nextLine();
+
+                                    valoresCompra.set(indiceDoId, novoValorCompra);
+                                    System.out.println("Valor de compra atualizado com sucesso! ");
+                                    entradaValida = true;
+                                }
+                                else if (desejoTrocar.equals("n")) {
+                                    System.out.println("Item não modificado! ");
+                                    entradaValida = true;
+                                }
+                            }
+                            catch (InputMismatchException e){
+                                    System.out.println("Erro: Digite um valor numérico para o preço.");
+                                    scanner.nextLine();
+                            }
+                        }   
+                        entradaValida = false;
+                        while (!entradaValida) {
+                            try{
+                                System.out.println("Deseja trocar o valor de venda?\ns - sim\nn - não ");
+                                desejoTrocar = scanner.nextLine();
+                                if (desejoTrocar.equals("s")){
+                                    System.out.println("Digite o novo valor de venda: ");
+                                    Double novoValorVenda = scanner.nextDouble();
+                                    scanner.nextLine();
+
+                                    valoresVenda.set(indiceDoId, novoValorVenda);
+                                    System.out.println("Valor de venda atualizado com sucesso! ");
+                                    entradaValida = true;
+                                }
+                                else if (desejoTrocar.equals("n")) {
+                                    System.out.println("Item não modificado! ");
+                                    entradaValida = true;
+                                }
+                            }catch (InputMismatchException e){
+                                    System.out.println("Erro: Digite um valor numérico para o preço.");
+                                    scanner.nextLine();
+                            }
                         }
 
                         Double valorVendaAtualizado = valoresVenda.get(indiceDoId);
@@ -374,6 +432,37 @@ public class Main {
                                 System.out.println("ID inválido! Camisa não atualizada! ");
                             }
                     }
+            } else if (escolha.equals("6")){
+                if (ids.isEmpty()){
+                    System.out.println("Nenhuma camisa cadastrada para buscar.");   
+                }
+                else {
+                    System.out.println("---------------------------------------------");
+                    System.out.println("Listar camisa por Atributos");
+                    System.out.println("---------------------------------------------");
+                    System.out.println("1- Listar por Cor.");
+                    System.out.println("2- Lstar por Tamanho.");
+                    System.out.println("Digite a opção que deseja pesquisar: ");
+                    String opcaoAtributos = scanner.nextLine();
+
+                    switch (opcaoAtributos) {
+                        case "1":
+                            System.out.println("Digite a cor que deseja listar: ");
+                            String CorBusca = scanner.nextLine().toUpperCase();
+                            ArrayList <Integer> indiceDaCor = buscarDadosCamisaPorCor(CorBusca, cores);
+
+                            for (Integer indice : indiceDaCor){
+                                modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
+                            }
+                            break;
+                        case "2":
+
+                    
+                        default:
+                            System.out.println("Opção inválida!");
+                            break;
+                    }                
+                }
             } else if (escolha.equals("0")) {
                 break;
             } else {
@@ -425,5 +514,15 @@ public class Main {
         }
 
         return -1;
+    }
+    public static ArrayList <Integer> buscarDadosCamisaPorCor (String corBusca ,ArrayList <String> cores){
+    ArrayList <Integer> indiceCoresVazio = new ArrayList<>();
+
+        for (int i = 0; i < cores.size(); i++) {
+            if (cores.get(i).equals(corBusca)){
+                indiceCoresVazio.add(i);
+            }
+        }
+    return indiceCoresVazio;
     }
 }
