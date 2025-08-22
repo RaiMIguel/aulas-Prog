@@ -33,6 +33,7 @@ public class Main {
         ArrayList<Double> descontos = new ArrayList<>();
         ArrayList<Boolean> controleVendidos = new ArrayList<>();
         ArrayList<Double> valoresVendasComDescontos = new ArrayList<>();
+        ArrayList<Double> lucros = new ArrayList<>();
         
         while (true) {
             System.out.println("---------------------------------------------");
@@ -45,6 +46,7 @@ public class Main {
             System.out.println("4 - Modificar ou atualizar uma camisa pelo ID");
             System.out.println("5 - Deletar camisa pelo ID");
             System.out.println("6 - Listar camisas por atributos especificos");
+            System.out.println("7 - Conferir todos Lucros até o Momento");
             System.out.println("0 - Sair do Sistema");
             escolha = scanner.nextLine();
 
@@ -169,6 +171,16 @@ public class Main {
                 
                 controleVendidos.add(false);
 
+                for (int i = 0; i < controleVendidos.size(); i++) {
+                    if (controleVendidos.get(i) == true){
+                        double lucroVendas = valoresVendasComDescontos.get(i) - valoresCompra.get(i);
+                        lucros.add(lucroVendas);
+                    }
+                    else if (controleVendidos.get(i) == false){
+                        lucros.add(0.0);
+                    }
+                }
+
                 ids.add(ids.isEmpty() ? 1 : (ids.get(ids.size() - 1) + 1));
                 System.out.println("Cadastrando camisa no estoque...");
 
@@ -183,8 +195,7 @@ public class Main {
                     System.out.println("---------------------------------------------");
                     
                     for (int listaCamisas = 0; listaCamisas < nomes.size(); listaCamisas++) {
-                        modeloListaDeCamisa(listaCamisas, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
-                    }
+                        modeloListaDeCamisa(listaCamisas, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                    }
                 }
             } else if (escolha.equals("3")) {
 
@@ -202,8 +213,7 @@ public class Main {
                     int indiceDoId = buscarDadosCamisaPorId(idBusca, ids);
                    
                     if (indiceDoId != -1) {
-                        modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
-                    }
+                    modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                    }
                     else {
                         System.out.println("Id não encontrado!");
                     }
@@ -225,8 +235,7 @@ public class Main {
                     int indiceDoId = buscarDadosCamisaPorId(idBusca, ids);
 
                     if (indiceDoId != -1) {
-                        modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
-                        
+                        modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                        
                         System.out.println("Deseja trocar o nome?\ns - sim\nn - não ");
                         String desejoTrocar = scanner.nextLine().toLowerCase();
                         if (desejoTrocar.equals("s")){
@@ -378,6 +387,8 @@ public class Main {
                             
                             if(novoStatusVenda.equals("V")){ 
                                 controleVendidos.set(indiceDoId, true);
+                                double lucroVendas = valoresVendasComDescontos.get(indiceDoId) - valoresCompra.get(indiceDoId);
+                                lucros.set(indiceDoId, lucroVendas);
                                 System.out.println("Camisa atualizada com sucesso para VENDIDO!");
                                 }
                             else if (desejoTrocar.equals("N")){
@@ -412,8 +423,7 @@ public class Main {
                         int indiceDoId = buscarDadosCamisaPorId(idBusca, ids);
 
                             if (idBusca != -1) {
-                                modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
-                                ids.remove(indiceDoId);
+                                modeloListaDeCamisa(indiceDoId, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                                ids.remove(indiceDoId);
                                 nomes.remove(indiceDoId);
                                 tamanhos.remove(indiceDoId);
                                 cores.remove(indiceDoId);
@@ -452,24 +462,50 @@ public class Main {
                             ArrayList <Integer> indiceDaCor = buscarDadosCamisaPorCor(CorBusca, cores);
 
                             for (Integer indice : indiceDaCor){
-                                modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos);
-                            }
+                            modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                        
                             break;
-                        case "2":
 
-                    
+                            }
+                        case "2": 
+                            
+                            System.out.println("Digite o tamanho que deseja listar: P, M, G , GG");
+                            String tamanhoBusca = scanner.nextLine().toUpperCase();
+                            ArrayList <Integer> indiceDoTamanho = buscarDadosCamisaPorTamanho(tamanhoBusca, tamanhos);
+
+                            if (tamanhoBusca.equals("P") || tamanhoBusca.equals("M") || tamanhoBusca.equals("G") || tamanhoBusca.equals("GG")){
+                                for (Integer indice : indiceDoTamanho) {
+                                modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                                }
+                                break;
+                            } else{
+                                System.out.println("Tamanho inválido!");
+                            }
+        
                         default:
                             System.out.println("Opção inválida!");
                             break;
                     }                
                 }
+            } else if (escolha.equals("7")){
+
+                    System.out.println("---------------------------------------------");
+                    System.out.println("Conferindo Lucros...");
+                    System.out.println("---------------------------------------------");
+          
+                    double somaLucro = 0;
+                    
+                    for (double lucro : lucros) {
+                        somaLucro = somaLucro + lucro;
+                    }
+                    System.out.print("Todos seu lucros até o momento são exatamente: R$"+ somaLucro);
+
             } else if (escolha.equals("0")) {
                 break;
+
             } else {
                 System.out.println("Opção inválida");
-
             }
-            //
+            
+            System.out.println("---------------------------------------------");
             System.out.println("Você deseja voltar ao menú?\ns - sim\nn - não");
             String opcaoMenu = scanner.nextLine().toLowerCase();
                 if (opcaoMenu.equals("s")){
@@ -488,7 +524,7 @@ public class Main {
     public static void modeloListaDeCamisa(int indice, ArrayList<String> nomes, ArrayList<Long> ids,
     ArrayList<String> tamanhos, ArrayList<String> cores, ArrayList<String> marcas, 
     ArrayList<Double> descontos, ArrayList<Double> valoresCompra, ArrayList<Double> valoresVenda,
-    ArrayList<Double> valoresVendasComDescontos, ArrayList<Boolean> controleVendidos) {
+    ArrayList<Double> valoresVendasComDescontos, ArrayList<Boolean> controleVendidos, ArrayList<Double> lucros) {
 
         System.out.println("---------------------------------------------");
         System.out.println();
@@ -502,6 +538,7 @@ public class Main {
         System.out.println("Valor de venda: R$" + valoresVenda.get(indice));
         System.out.println("Valor de venda com Desconto: R$" + valoresVendasComDescontos.get(indice));
         System.out.println("Status de venda: " + (controleVendidos.get(indice) ? "VENDIDO" : "NÃO VENDIDO"));
+        System.out.println("Lucro: R$" + lucros.get(indice));
         System.out.println();
         System.out.println("---------------------------------------------");
         }
@@ -524,5 +561,16 @@ public class Main {
             }
         }
     return indiceCoresVazio;
+    }
+    public static ArrayList <Integer> buscarDadosCamisaPorTamanho (String tamanhoBusca, ArrayList <String> tamanhos){
+    ArrayList <Integer> indiceTamanhoVazio = new ArrayList<>();
+
+        for (int i = 0; i < tamanhos.size(); i++) {
+            if(tamanhos.get(i).equals(tamanhoBusca)){
+                indiceTamanhoVazio.add(i);
+            }   
+        }
+
+    return indiceTamanhoVazio;
     }
 }
