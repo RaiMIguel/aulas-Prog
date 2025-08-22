@@ -462,10 +462,9 @@ public class Main {
                             ArrayList <Integer> indiceDaCor = buscarDadosCamisaPorCor(CorBusca, cores);
 
                             for (Integer indice : indiceDaCor){
-                            modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                        
-                            break;
-
+                            modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);
                             }
+                            break;
                         case "2": 
                             
                             System.out.println("Digite o tamanho que deseja listar: P, M, G , GG");
@@ -474,7 +473,8 @@ public class Main {
 
                             if (tamanhoBusca.equals("P") || tamanhoBusca.equals("M") || tamanhoBusca.equals("G") || tamanhoBusca.equals("GG")){
                                 for (Integer indice : indiceDoTamanho) {
-                                modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);                                }
+                                modeloListaDeCamisa(indice, nomes, ids, tamanhos, cores, marcas, descontos, valoresCompra, valoresVenda, valoresVendasComDescontos, controleVendidos, lucros);
+                                }
                                 break;
                             } else{
                                 System.out.println("Tamanho inválido!");
@@ -496,7 +496,7 @@ public class Main {
                     for (double lucro : lucros) {
                         somaLucro = somaLucro + lucro;
                     }
-                    System.out.print("Todos seu lucros até o momento são exatamente: R$"+ somaLucro);
+                    System.out.println("Todos seu lucros até o momento são exatamente: R$"+ somaLucro);
 
             } else if (escolha.equals("0")) {
                 break;
