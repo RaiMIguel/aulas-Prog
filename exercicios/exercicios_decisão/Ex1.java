@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 
 // (dicas do naruto) AVALIAÇÃO: 45/100
