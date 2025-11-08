@@ -1,6 +1,17 @@
 package exercicios.cem_questoes_poo.questao_15;
 
-public class Main {
+/**
+ * @param args
+ *
+ * questão: Kakashi é um sensei com alunos especiais. Crie a classe Sensei e a subclasse SenseiJounin, que possui o atributo alunoFavorito (String).
+ * Objetivos**:
+ * - Encapsulamento
+ * - Herança
+ *
+ * @return "Sensei: Kakashi / Especialidade: Sharingan / Aluno Favorito: Naruto"
+ */
+
+public class    Main {
     public static void main(String[] args) {
         SenseiJounin kakashi = new SenseiJounin("Kakashi", "Sharingan", "Naruto");
         
