@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/aulas-Prog.iml" filepath="$PROJECT_DIR$/aulas-Prog.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sistema_registro_shinobi/sistema_registro_shinobi.iml" filepath="$PROJECT_DIR$/sistema_registro_shinobi/sistema_registro_shinobi.iml" />
     </modules>
   </component>
 </project>
