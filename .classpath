@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="exercicios/cem_questoes_poo/questao_1/|exercicios/exercicios_decisão/|exercicios/cem_questoes/|exercicios/exercicios_vetores/" kind="src" path=""/>
+	<classpathentry kind="src" path="exercicios/cem_questoes"/>
+	<classpathentry kind="src" path="exercicios/cem_questoes_poo/questao_1"/>
+	<classpathentry kind="src" path="exercicios/exercicios_decisão"/>
+	<classpathentry kind="src" path="exercicios/exercicios_vetores"/>
+	<classpathentry kind="output" path="out/production/aulas-Prog"/>
+</classpath>

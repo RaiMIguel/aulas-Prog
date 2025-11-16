@@ -1,0 +1,12 @@
+git clone "url do projeto" 
+git add . = adionar tudo
+git commit -m "mensagem do commit"    
+#sempre descrever o que foi alterado
+git push origin main = enviar commit
+git remote -v = conferir repositório
+git pull origin main = puxar atualizações (do repositorio remoto)
+#sempre puxar antes de enviar
+
+git remote set-url origin https://github.com/seu-usuario/repositorio-certo.git (link repositório)
+== trocar repositorio
+
