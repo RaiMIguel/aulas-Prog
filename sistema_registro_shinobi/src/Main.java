@@ -1,6 +1,3 @@
-import java.sql.SQLOutput;
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
@@ -86,7 +83,7 @@ public class Main {
                     System.out.println("⚠️ Shinobi ID " + idSearch + " não encontrado para edição.");
                     return;
                 }
-                System.out.printf("qual item deseja editar?\n 1-nome\n2-email\n3-senha\n4-habilidades");
+                System.out.println("qual item deseja editar?\n 1-nome\n2-email\n3-senha\n4-habilidades");
                 int optionUpdate = scan.nextInt();
                 scan.nextLine();
 

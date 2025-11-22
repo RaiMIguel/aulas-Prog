@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class UsuarioRepositorio {
 private List<Shinobi> shinobis = new ArrayList<>();
@@ -12,9 +11,9 @@ public List<Shinobi> listUsers() {
     return List.copyOf(shinobis);
 }
 public Shinobi toSearchUserId (Long idSearch){
-    for (int i = 0; i < shinobis.size(); i++) {
-        if (shinobis.get(i).getId().equals(idSearch)) {
-            return (shinobis.get(i));
+    for (Shinobi shinobi : shinobis) {
+        if (shinobi.getId().equals(idSearch)) {
+            return shinobi;
         }
     }
     return null;
@@ -31,14 +30,14 @@ public boolean toDelete (long idSearch){
 }
 public boolean toUpdate(Shinobi shinobi){
 
-    for (int i = 0; i < shinobis.size(); i++) {
-        if (shinobis.get(i).getId().equals(shinobi.getId())) {
-        shinobis.get(i).setName(shinobi.getName());
-        shinobis.get(i).setEmail(shinobi.getEmail());
-        shinobis.get(i).setPassword(shinobi.getPassword());
-        shinobis.get(i).setabilities(shinobi.getabilities());
+    for (Shinobi value : shinobis) {
+        if (value.getId().equals(shinobi.getId())) {
+            value.setName(shinobi.getName());
+            value.setEmail(shinobi.getEmail());
+            value.setPassword(shinobi.getPassword());
+            value.setabilities(shinobi.getabilities());
 
-        return true;
+            return true;
         }
     }
     return false;

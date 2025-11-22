@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Shinobi {
@@ -21,11 +22,7 @@ public Shinobi(String name, String email, String password, List<String> abilitie
     this.dateRegistration = LocalDate.now();
     this.id = IDGENERATOR.incrementAndGet();
 
-    if (abilities == null) {
-        this.abilities = new ArrayList<>();
-    } else {
-        this.abilities = abilities;
-    }
+    this.abilities = Objects.requireNonNullElseGet(abilities, ArrayList::new);
 }
 
     public Long getId() {
