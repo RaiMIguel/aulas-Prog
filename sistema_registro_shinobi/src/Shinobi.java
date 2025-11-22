@@ -1,25 +1,30 @@
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Shinobi {
-Long id;
-String name;
-String email;
-String password;
-LocalDate dateRegistration;
-List<String> habilities;
+    private static final AtomicLong IDGENERATOR = new AtomicLong(2999);
 
-public Shinobi(String name, String email, String password, LocalDate dateRegistration, List<String> habilities){
+    LocalDate dateRegistration;
+    long id;
+    String name;
+    String email;
+    String password;
+    List<String> abilities;
+
+public Shinobi(String name, String email, String password, List<String> abilities){
     this.name = name;
     this.email = email;
     this.password = password;
-    this.dateRegistration = dateRegistration;
-    if (habilities == null) {
-        this.habilities = new ArrayList<>();
+
+    this.dateRegistration = LocalDate.now();
+    this.id = IDGENERATOR.incrementAndGet();
+
+    if (abilities == null) {
+        this.abilities = new ArrayList<>();
     } else {
-        this.habilities = habilities;
+        this.abilities = abilities;
     }
 }
 
@@ -63,21 +68,23 @@ public Shinobi(String name, String email, String password, LocalDate dateRegistr
         this.dateRegistration = dateRegistration;
     }
 
-    public List<String> getHabilities() {
-        return habilities;
+    public List<String> getabilities() {
+        return abilities;
     }
 
-    public void setHabilities(List<String> habilities) {
-        this.habilities = habilities;
+    public void setabilities(List<String> abilities) {
+        this.abilities = abilities;
     }
 
     public String toString() {
-        return "\n--- Registro de Shinobi ---\n" +
-                "ID: " + this.id + " ---\n" +
-                "Nome: " + this.name + "\n" +
-                "Email: " + this.email + "\n" +
-                "Data de Registro: " + this.dateRegistration + "\n" +
-                "Habilidades: " + this.habilities.toString() +
-                "\n------------------------------";
+        return
+            "\n--- Registro de Shinobi ---\n" +
+            "ID: " + this.id + " \n" +
+            "Nome: " + this.name + "\n" +
+            "Email: " + this.email + "\n" +
+            "Data de Registro: " + this.dateRegistration + "\n" +
+            "Habilidades: " + this.abilities.toString() +
+            "\n----------------------------";
     }
 }
+

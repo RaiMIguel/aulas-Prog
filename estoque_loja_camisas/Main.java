@@ -1,4 +1,4 @@
-package exercicio_estoque;
+package estoque_loja_camisas;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;

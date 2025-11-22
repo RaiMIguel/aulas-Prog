@@ -1,4 +1,4 @@
-package exercicio_estoque;
+package estoque_loja_camisas;
 
 public class Camisa {
 
