@@ -1,31 +1,34 @@
 package exercicios.exercicios_estrutura_dados.listaligada;
 
-
 public class ListaLigadaNinja {
+
     public class NinjaNode {
         String name;
         int powerChakra;
         String village;
-
         NinjaNode next;
+        NinjaNode prev;
 
-        public NinjaNode(String name, int powerChakra, String village){
+        public NinjaNode(String name, int powerChakra, String village) {
             this.name = name;
             this.powerChakra = powerChakra;
             this.village = village;
             this.next = null;
+            this.prev = null;
         }
     }
 
     private NinjaNode head;
+    private NinjaNode tail;
     private int size;
 
     public ListaLigadaNinja() {
         this.head = null;
+        this.tail = null;
         this.size = 0;
     }
 
-    public boolean isempty() {
+    public boolean isEmpty() {
         return head == null;
     }
 
@@ -33,79 +36,123 @@ public class ListaLigadaNinja {
         return size;
     }
 
-    public void insertBeginning(String nameIB,int powerIB, String villageIB){
-        NinjaNode newNinja = new NinjaNode(nameIB,powerIB,villageIB);
-        newNinja.next = head;
-        head = newNinja;
-        size++;
-    }
-    public  void insertEnd(String nameIE, int powerIE, String villageIE){
-        NinjaNode newNinja = new NinjaNode(nameIE, powerIE, villageIE);
-        if (isempty()){
-            head = newNinja;
-        } else {
-            NinjaNode actual = head;
-            while (actual.next != null){
-                actual = actual.next;
-            }
-            actual.next = newNinja;
-        }
-        size++;
-    }
-    public void removeBeginning(){
-        if (isempty()){
-            System.out.println("vazio!");
-        }
-        head = head.next;
-        size--;
-    }
-    public  void removeForName(String name){
-        if (isempty()){
-            System.out.println("vazio");
-        }
-        if (head.name.equals(name)){
-            removeBeginning();
-        }
-        NinjaNode actual = head;
-        while (actual.next != null && !actual.next.name.equals(name)){
-            actual = actual.next;
-        }
-        if (actual.next != null){
-            actual.next = actual.next.next;
-            size--;
-            System.out.println(name + " removido da missão");
+    public void insertEnd(String name, int power, String village) {
+        NinjaNode newNinja = new NinjaNode(name, power, village);
 
+        if (isEmpty()) {
+            head = newNinja;
+            tail = newNinja;
+        } else {
+            tail.next = newNinja;
+            newNinja.prev = tail;
+            tail = newNinja;
         }
-        else {
-            System.out.println("Não encontrado");
-        }
+        size++;
     }
-    public NinjaNode searchForName(String name){
+
+    public void display() {
+        if (isEmpty()) {
+            System.out.println("Lista vazia!");
+            return;
+        }
+
+        System.out.println("===== EQUIPE NINJA =====");
         NinjaNode actual = head;
-        while (actual != null){
-            if (actual.name.equals(name)){
+        int pos = 0;
+
+        while (actual != null) {
+            System.out.println(
+                    pos + ". " + actual.name +
+                            " | Poder: " + actual.powerChakra +
+                            " | Aldeia: " + actual.village
+            );
+            actual = actual.next;
+            pos++;
+        }
+        System.out.println("========================");
+    }
+
+    public void displayReverse() {
+        if (isEmpty()) {
+            System.out.println("Lista vazia!");
+            return;
+        }
+
+        System.out.println("===== EQUIPE NINJA (REVERSO) =====");
+        NinjaNode actual = tail;
+        int pos = size - 1;
+
+        while (actual != null) {
+            System.out.println(
+                    pos + ". " + actual.name +
+                            " | Poder: " + actual.powerChakra +
+                            " | Aldeia: " + actual.village
+            );
+            actual = actual.prev;
+            pos--;
+        }
+        System.out.println("===============================");
+    }
+
+    public NinjaNode searchForName(String name) {
+        NinjaNode actual = head;
+
+        while (actual != null) {
+            if (actual.name.equals(name)) {
                 return actual;
             }
             actual = actual.next;
         }
         return null;
     }
-    public void display(){
-        if (isempty()){
-            System.out.println("Não existe Ninja ainda!");
-        }
-        System.out.println("----------EQUIPE----------");
-        NinjaNode actual  = head;
-        int pos = 0;
 
-        while (actual != null){
-            System.out.println( pos + 1 + ". " + actual.name + " PODER: " + actual.powerChakra
-                    + " Aldeia: "+ actual.village);
-            actual = actual.next;
-            pos++;
+    public void updateForName(String name, String newName, int newPower, String newVillage) {
+        NinjaNode ninja = searchForName(name);
+
+        if (ninja == null) {
+            System.out.println("Ninja não encontrado!");
+            return;
         }
-        System.out.println("quantidade de ninjas:" + size);
+
+        ninja.name = newName;
+        ninja.powerChakra = newPower;
+        ninja.village = newVillage;
+        System.out.println("Ninja atualizado com sucesso!");
     }
 
-}
+    public void removeForName(String name) {
+        if (isEmpty()) {
+            System.out.println("Lista vazia!");
+            return;
+        }
 
+        NinjaNode actual = searchForName(name);
+
+        if (actual == null) {
+            System.out.println("Ninja não encontrado!");
+            return;
+        }
+
+        if (actual == head) {
+            head = head.next;
+            if (head != null) {
+                head.prev = null;
+            } else {
+                tail = null;
+            }
+        }
+        else if (actual == tail) {
+            tail = tail.prev;
+            if (tail != null) {
+                tail.next = null;
+            }
+        }
+        else {
+            actual.prev.next = actual.next;
+            actual.next.prev = actual.prev;
+        }
+
+        size--;
+        System.out.println(name + " removido da equipe!");
+    }
+}
