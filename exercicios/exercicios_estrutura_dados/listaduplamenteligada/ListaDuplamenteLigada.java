@@ -24,13 +24,10 @@ public class ListaDuplamenteLigada {
     private NinjaNode tail;
     private int size;
 
-    private int nextId;
-
     public ListaDuplamenteLigada() {
         this.head = null;
         this.tail = null;
         this.size = 0;
-        this.nextId = 1;
     }
 
     public boolean isEmpty() {
@@ -41,22 +38,25 @@ public class ListaDuplamenteLigada {
         return size;
     }
 
-    private int generateId() {
-        int id = nextId;
-        nextId++;
-        return id;
-    }
+    public boolean insertOrdered(int id, String name, int power, String village) {
 
+        if (id <= 0) {
+            System.out.println("ID inválido! Use um número maior que 0.");
+            return false;
+        }
 
-    public int insertOrdered(String name, int power, String village) {
-        int id = generateId();
+        if (searchForId(id) != null) {
+            System.out.println("ID já existe!");
+            return false;
+        }
+
         NinjaNode newNinja = new NinjaNode(id, name, power, village);
 
         if (isEmpty()) {
             head = newNinja;
             tail = newNinja;
             size++;
-            return id;
+            return true;
         }
 
         if (id < head.id) {
@@ -64,7 +64,7 @@ public class ListaDuplamenteLigada {
             head.prev = newNinja;
             head = newNinja;
             size++;
-            return id;
+            return true;
         }
 
         NinjaNode actual = head;
@@ -83,7 +83,7 @@ public class ListaDuplamenteLigada {
 
         actual.next = newNinja;
         size++;
-        return id;
+        return true;
     }
 
 
@@ -145,19 +145,30 @@ public class ListaDuplamenteLigada {
         return null;
     }
 
-    public void updateForId(int id, String newName, int newPower, String newVillage) {
+    public boolean updateForId(int id, String newName, int newPower, String newVillage) {
         NinjaNode ninja = searchForId(id);
 
         if (ninja == null) {
             System.out.println("ID não encontrado!");
-            return;
+            return false;
         }
 
-        ninja.name = newName;
-        ninja.powerChakra = newPower;
-        ninja.village = newVillage;
+        if (newName != null && !newName.equals("-") && !newName.isEmpty()) {
+            ninja.name = newName;
+        }
+
+        if (newPower != -1) {
+            ninja.powerChakra = newPower;
+        }
+
+        if (newVillage != null && !newVillage.equals("-") && !newVillage.isEmpty()) {
+            ninja.village = newVillage;
+        }
+
         System.out.println("Ninja atualizado com sucesso!");
+        return true;
     }
+
 
     public void removeForId(int id) {
         if (isEmpty()) {

@@ -13,7 +13,7 @@ public class Main {
         while (opcao != 0) {
 
             System.out.println("\n===== MENU NINJA (ORDENADO POR ID) =====");
-            System.out.println("1 - Inserir ninja (gera ID automático)");
+            System.out.println("1 - Inserir ninja");
             System.out.println("2 - Listar ninjas (crescente por ID)");
             System.out.println("3 - Listar ninjas ao contrário (decrescente por ID)");
             System.out.println("4 - Buscar ninja por ID");
@@ -26,8 +26,25 @@ public class Main {
             sc.nextLine();
 
             if (opcao == 1) {
+
+                int id = 0;
+                boolean idsearch = true;
+                while (idsearch) {
+                    System.out.print("ID: ");
+                    id = sc.nextInt();
+                    sc.nextLine();
+                    if (equipe.searchForId(id) != null) {
+                        System.out.println("ID JÁ EXISTE!");
+                        idsearch = true;
+                    }
+                    else {
+                        idsearch = false;
+                    }
+
+                }
+                String nome;
                 System.out.print("Nome: ");
-                String nome = sc.nextLine();
+                nome = sc.nextLine();
 
                 System.out.print("Poder de Chakra: ");
                 int poder = sc.nextInt();
@@ -36,14 +53,13 @@ public class Main {
                 System.out.print("Vila: ");
                 String vila = sc.nextLine();
 
-                int idGerado = equipe.insertOrdered(nome, poder, vila);
-                System.out.println("Ninja inserido com sucesso! ID gerado: " + idGerado);
+                boolean ok = equipe.insertOrdered(id, nome, poder, vila);
 
-                if (equipe.getSize() == 5) {
-                    System.out.println("\nVocê adicionou 5 ninjas. Exibindo todos em ordem:");
-                    equipe.display();
+                if (ok) {
+                    System.out.println("Ninja inserido com sucesso!");
                 }
             }
+
 
             else if (opcao == 2) {
                 equipe.display();
@@ -77,17 +93,29 @@ public class Main {
                 int id = sc.nextInt();
                 sc.nextLine();
 
-                System.out.print("Novo nome: ");
+                System.out.print("Novo nome (ou - para manter): ");
                 String novoNome = sc.nextLine();
 
-                System.out.print("Novo poder de Chakra: ");
+                System.out.print("Novo poder de Chakra (ou -1 para manter): ");
                 int novoPoder = sc.nextInt();
                 sc.nextLine();
 
-                System.out.print("Nova vila: ");
+                System.out.print("Nova vila (ou - para manter): ");
                 String novaVila = sc.nextLine();
 
-                equipe.updateForId(id, novoNome, novoPoder, novaVila);
+                boolean ok = equipe.updateForId(id, novoNome, novoPoder, novaVila);
+
+                if (ok) {
+                    System.out.println("Após atualização:");
+                    ListaDuplamenteLigada.NinjaNode ninja = equipe.searchForId(id);
+                    if (ninja != null) {
+                        System.out.println(
+                                ninja.id + " - " + ninja.name +
+                                        " | Poder: " + ninja.powerChakra +
+                                        " | Aldeia: " + ninja.village
+                        );
+                    }
+                }
             }
 
             else if (opcao == 6) {
