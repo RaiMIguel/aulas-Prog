@@ -19,7 +19,7 @@ public class ListaCircularNinja {
     }
 
     private NinjaNode head;
-    private NinjaNode tail; // Adicionado para fechar o círculo com eficiência
+    private NinjaNode tail;
     private int size;
 
     public ListaCircularNinja() {
@@ -32,7 +32,6 @@ public class ListaCircularNinja {
         return head == null;
     }
 
-    // --- MUDANÇA NA INSERÇÃO ORDENADA ---
     public boolean insertOrdered(int id, String name, int power, String village) {
         if (id <= 0) return false;
         if (searchForId(id) != null) return false;
@@ -44,7 +43,7 @@ public class ListaCircularNinja {
             tail = newNinja;
             newNinja.next = head; // Fecha o círculo
         }
-        else if (id < head.id) { // Novo menor ID (Novo Head)
+        else if (id < head.id) { // Novo menor ID (Novo Head
             newNinja.next = head;
             head = newNinja;
             tail.next = head; // O tail agora aponta para o novo head
@@ -61,14 +60,13 @@ public class ListaCircularNinja {
             actual.next = newNinja;
 
             if (actual == tail) {
-                tail = newNinja; // Se inseriu no fim, atualiza o tail
+                tail = newNinja;
             }
         }
         size++;
         return true;
     }
 
-    // --- MUDANÇA NA EXIBIÇÃO ---
     public void display() {
         if (isEmpty()) {
             System.out.println("Lista vazia!");
@@ -80,25 +78,23 @@ public class ListaCircularNinja {
         do {
             System.out.println(actual.id + " - " + actual.name + " | Poder: " + actual.powerChakra);
             actual = actual.next;
-        } while (actual != head); // Para quando der a volta completa
+        } while (actual != head);
 
         System.out.println("==========================================");
         System.out.println("Quantidade de ninjas: " + size);
     }
 
-    // --- MUDANÇA NA BUSCA ---
     public NinjaNode searchForId(int id) {
         if (isEmpty()) return null;
         NinjaNode actual = head;
         do {
             if (actual.id == id) return actual;
-            if (actual.id > id) return null; // Otimização
+            if (actual.id > id) return null;
             actual = actual.next;
         } while (actual != head);
         return null;
     }
 
-    // --- MUDANÇA NA REMOÇÃO ---
     public boolean removeForId(int id) {
         if (isEmpty()) return false;
 
@@ -109,13 +105,12 @@ public class ListaCircularNinja {
                 tail = null;
             } else {
                 head = head.next;
-                tail.next = head; // Mantém o círculo vivo
+                tail.next = head;
             }
             size--;
             return true;
         }
 
-        // Caso 2: Remover no meio ou fim
         NinjaNode actual = head;
         // Busca o nó ANTERIOR ao que queremos remover
         while (actual.next != head && actual.next.id < id) {
@@ -134,7 +129,6 @@ public class ListaCircularNinja {
         return false;
     }
 
-    // O UpdateForId permanece 99% igual, pois ele usa o searchForId()
     public boolean updateForId(int id, String newName, int newPower, String newVillage) {
         NinjaNode ninja = searchForId(id);
         if (ninja == null) return false;

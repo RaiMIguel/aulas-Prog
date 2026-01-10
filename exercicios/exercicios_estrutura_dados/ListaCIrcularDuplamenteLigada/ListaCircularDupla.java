@@ -15,7 +15,6 @@ public class ListaCircularDupla {
 
     private Node head = null;
 
-    // [C]REATE - Inserção Ordenada
     public void insert(int id, String nome) {
         Node novo = new Node(id, nome);
         if (head == null) {
@@ -44,7 +43,6 @@ public class ListaCircularDupla {
         }
     }
 
-    // [R]EAD - Busca e Exibição
     public Node search(int id) {
         if (head == null) return null;
         Node atual = head;
@@ -65,7 +63,6 @@ public class ListaCircularDupla {
         System.out.println("(HEAD)");
     }
 
-    // [U]PDATE - Atualizar Nome
     public boolean update(int id, String novoNome) {
         Node ninja = search(id);
         if (ninja != null) {
@@ -75,7 +72,6 @@ public class ListaCircularDupla {
         return false;
     }
 
-    // [D]ELETE - Remover da Lista
     public boolean remove(int id) {
         if (head == null) return false;
 
