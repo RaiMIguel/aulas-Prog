@@ -1,4 +1,4 @@
-package exercicios.exercicios_algoritmosordenação.bubblesort;
+package exercicios.exercicios_algoritmosordenacao.mergesort;
 
 public class Ninja {
     String name;
@@ -17,6 +17,3 @@ public class Ninja {
         return String.format("Ninja: %-10s | Chakra: %-5d | Rank: %s", name, powerChakra, rank);
     }
 }
-
-
-

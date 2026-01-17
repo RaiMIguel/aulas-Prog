@@ -1,4 +1,4 @@
-package exercicios.exercicios_algoritmosordenação.bubblesort;
+package exercicios.exercicios_algoritmosordenacao.bubblesort;
 
 public class RankingSystem {
     private int exchanges = 0;

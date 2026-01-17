@@ -1,4 +1,4 @@
-package exercicios.exercicios_algoritmosordenação.bubblesort;
+package exercicios.exercicios_algoritmosordenacao.bubblesort;
 
 public class BubbleSortNinja {
     public static void main(String[] args) {
@@ -12,19 +12,28 @@ public class BubbleSortNinja {
                 new Ninja("Shikamaru", "Konoha", 5500, "B")
         };
 
-        RankingSystem sistema = new RankingSystem();
+        RankingSystem system = new RankingSystem();
+
+        //testando 100 ninjas ao mesmo tempo
+        //Ninja[] konoha = new Ninja[100];
+        //for (int i = 0; i < 100; i++) {
+        //    int chakraAleatorio = (int) (Math.random() * 10000);
+        //    konoha[i] = new Ninja("Ninja_" + i, "Vila", chakraAleatorio, "A");
+        //}
+
+        //RankingSystem system = new RankingSystem();
 
         System.out.println("=== NINJAS POR PODER (CRESCENTE) ===");
-        sistema.orderByPower(konoha);
+        system.orderByPower(konoha);
         for (Ninja n : konoha) System.out.println(n);
-        sistema.showStatistics();
+        system.showStatistics();
 
         System.out.println("\n=== TOP 3 MAIS PODEROSOS ===");
-        Ninja[] top3 = sistema.listTop3(konoha);
+        Ninja[] top3 = system.listTop3(konoha);
         for (Ninja n : top3) System.out.println(n);
 
         System.out.println("\n=== NINJAS POR RANK (S -> D) ===");
-        sistema.orderByRank(konoha);
+        system.orderByRank(konoha);
         for (Ninja n : konoha) System.out.println(n);
     }
 }
