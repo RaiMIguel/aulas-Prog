@@ -1,4 +1,4 @@
-package exercicios.exercicios_algoritmosordenacao.bubble_merge;
+package exercicios.exercicios_algoritmosordenacao.bubble_merge_quick;
 
 public class Stock {
     String name;

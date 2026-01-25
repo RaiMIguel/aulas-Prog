@@ -1,8 +1,6 @@
-package exercicios.exercicios_algoritmosordenacao.bubble_merge;
+package exercicios.exercicios_algoritmosordenacao.bubble_merge_quick;
 
-import exercicios.exercicios_estrutura_dados.listacircular.ListaCircularNinja;
-
-public class OrganizationStock {
+public class OrganizationStockBubble {
     private int exchanges;
     private int comparisons;
 
